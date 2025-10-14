@@ -1,0 +1,36 @@
+{
+  "cli": {
+    "version": ">= 16.16.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EAS_BUILD_PROFILE": "development",
+        "EXPO_PUBLIC_API_URL": "https://api.querodesconto.app",
+        "EXPO_PUBLIC_IMG_URL": "https://api.querodesconto.app"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "EAS_BUILD_PROFILE": "development",
+        "EXPO_PUBLIC_API_URL": "https://api.querodesconto.app",
+        "EXPO_PUBLIC_IMG_URL": "https://api.querodesconto.app"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "env": {
+        "EAS_BUILD_PROFILE": "development",
+        "EXPO_PUBLIC_API_URL": "https://api.querodesconto.app",
+        "EXPO_PUBLIC_IMG_URL": "https://api.querodesconto.app"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "expo": {
+    "name": "queroDesconto_parceiros",
+    "slug": "querodescontoparceiros",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSCameraUsageDescription": "Precisamos acessar sua câmera para você tirar uma foto de perfil.",
+        "NSPhotoLibraryUsageDescription": "Autorize o acesso a sua galeria para escolher uma foto de perfil.",
+        "UIBackgroundModes": [
+          "remote-notification"
+        ],
+        "NSUserNotificationsUsageDescription": "Este aplicativo utiliza notificações para alertá-lo sobre atualizações importantes.",
+        "LSApplicationQueriesSchemes": [
+          "https",
+          "http",
+          "mailto",
+          "tel",
+          "sms",
+          "whatsapp",
+          "instagram",
+          "facebook",
+          "twitter",
+          "youtube",
+          "maps",
+          "googlemaps"
+        ]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "NOTIFICATIONS"
+      ],
+      "edgeToEdgeEnabled": true,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "gcamp"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification_icon_android.png",
+          "color": "#ffffff",
+          "iosDisplayInForeground": true,
+          "android": {
+            "icon": "./assets/images/notification_icon_android.png",
+            "color": "#ffffff",
+            "channelId": "default"
+          },
+          "ios": {
+            "icon": "./assets/images/notification-icon-ios.png"
+          }
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "70f1acbf-f922-40c6-ba44-9610c3109cfa"
+      }
+    }
+  }
+}

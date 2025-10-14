@@ -1,0 +1,219 @@
+import { StyleSheet, Dimensions } from 'react-native';
+import { COLORS, FONT_SIZES, SPACING, normaSizes } from '../constants';
+
+const { width } = Dimensions.get('window');
+const itemWidth = (width - 48) / 3; // 3 items per row with margins
+
+export const createStyles = () => {
+    return StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: '#3f0033ff',
+            paddingHorizontal: SPACING.sm,
+            paddingBottom: -50,
+        },
+        header: {
+            flexDirection: 'column',
+            width: '100%',
+            paddingTop: SPACING.md,
+            alignItems: 'center',
+            gap: 8,
+            marginBottom: SPACING.md
+        },
+        categoryButton: {
+            width: 110,
+            height: 60,
+            paddingVertical: SPACING.sm,
+            paddingHorizontal: SPACING.md,
+            marginRight: SPACING.sm,
+            borderRadius: 10
+        },
+        categoryButtonText: {
+            color: COLORS.white,
+            fontSize: normaSizes(FONT_SIZES.md),
+        },
+        content: {
+            padding: SPACING.lg,
+            alignItems: 'center',
+        },
+        title: {
+            fontSize: FONT_SIZES.xxl,
+            fontWeight: 'bold',
+            color: COLORS.white,
+            marginBottom: SPACING.sm,
+            textAlign: 'center',
+        },
+        subtitle: {
+            fontSize: FONT_SIZES.md,
+            color: COLORS.white,
+            textAlign: 'center',
+            opacity: 0.9,
+        },
+        campanhaCard: {
+            flexDirection: 'row',
+            width: '100%',
+            minHeight: normaSizes(200),
+            backgroundColor: '#ffffffff',
+            borderRadius: 12,
+            borderRightWidth: 7,
+            borderBottomWidth: 7,
+            borderColor: COLORS.secondary,
+            paddingBottom: 15,
+            marginVertical: SPACING.md,
+            alignItems: 'center'
+        },
+        campanhaTitle: {
+            fontSize: normaSizes(20),
+            fontWeight: 'bold',
+            color: COLORS.primary,
+            textAlign: 'left',
+        },
+        campanhaLojaNome: {
+            fontSize: normaSizes(16),
+            fontWeight: 'bold',
+        },
+        campanhaDescription: {
+            fontSize: normaSizes(14),
+            color: COLORS.gray,
+            marginTop: SPACING.xs,
+            textAlign: 'center',
+            fontStyle: 'italic',
+        },
+        campanhaImageContainer: {
+            position: 'absolute',
+            top: -20,
+            left: SPACING.sm,
+            zIndex: 10,
+            width: normaSizes(100),
+            height: normaSizes(100),
+            borderRadius: 100,
+            marginRight: SPACING.sm,
+            overflow: 'hidden',
+            borderWidth: 2,
+            borderColor: COLORS.white,
+        },
+        campanhaLojaLogo: {
+            width: '100%',
+            height: normaSizes(100),
+            backgroundColor: '#222',
+        },
+        campanhaCupons: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: SPACING.sm,
+            borderTopWidth: 1,
+            borderTopColor: COLORS.gray,
+        },
+        campanhaInfo: {
+            width: '100%',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: 4,
+            padding: SPACING.sm,
+            alignItems: 'flex-start',
+        },
+        cupomContainer: {
+            width: 130,
+            height: 80,
+            backgroundColor: COLORS.primary,
+            paddingVertical: SPACING.xs,
+            marginRight: SPACING.sm,
+            borderRadius: 10,
+            borderBottomWidth: normaSizes(6),
+            borderRightWidth: normaSizes(6),
+            borderColor: COLORS.secondary,
+            shadowColor: '#000',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        cupomText: {
+            color: COLORS.white,
+            fontWeight: 'bold',
+            marginHorizontal: SPACING.sm,
+            fontStyle: 'italic'
+        },
+        cupomTipoBox: {
+            position: 'absolute',
+            backgroundColor: COLORS.secondary,
+            paddingHorizontal: normaSizes(1),
+            paddingVertical: normaSizes(4),
+            borderRadius: 6,
+        },
+        cupomTipoText: {
+            color: COLORS.primary,
+            fontSize: normaSizes(FONT_SIZES.lg),
+            fontWeight: 'bold',
+            marginHorizontal: SPACING.sm,
+        },
+        cupomRestamBox: {
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            backgroundColor: '#ffffffff',
+            borderTopRightRadius: 4,
+            paddingHorizontal: 4,
+        },
+        cupomRestamText: {
+            color: COLORS.primary,
+            fontSize: normaSizes(12),
+            fontStyle: 'italic',
+        },
+        cupomOffBox: {
+            position: 'absolute',
+            top: normaSizes(60),
+            right: 0,
+            backgroundColor: '#ffdb3bff',
+            paddingHorizontal: 4,
+            paddingVertical: 2,
+            borderTopLeftRadius: 4,
+            borderBottomLeftRadius: 4
+        },
+        cupomOffBoxText: {
+            color: COLORS.black,
+            fontSize: normaSizes(11),
+        },
+        cupomTituloBox: {
+            position: 'absolute',
+            top: 0,
+            paddingHorizontal: 3,
+            paddingVertical: 2,
+            backgroundColor: COLORS.secondary,
+            borderBottomLeftRadius: 5,
+            borderBottomRightRadius: 5,
+        },
+        cupomTituloBoxText: {
+            color: COLORS.white,
+            fontSize: normaSizes(11),
+        },
+        button: {
+            backgroundColor: COLORS.primary,
+            paddingVertical: SPACING.md,
+            paddingHorizontal: SPACING.xl,
+            borderRadius: 25,
+            shadowColor: COLORS.primary,
+            shadowOffset: {
+                width: 0,
+                height: 2,
+            },
+            shadowOpacity: 0.3,
+            shadowRadius: 3.84,
+            elevation: 5,
+        },
+        timeToEnd: {
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            backgroundColor: '#ffe797ff',
+            padding: 4,
+            borderBottomRightRadius: 8,
+            borderBottomLeftRadius: 8,
+        },
+        buttonText: {
+            color: COLORS.white,
+            fontSize: FONT_SIZES.md,
+            fontWeight: 'bold',
+        },
+    })
+};

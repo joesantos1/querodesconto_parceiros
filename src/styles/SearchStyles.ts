@@ -1,0 +1,240 @@
+import { StyleSheet, Dimensions } from 'react-native';
+import { COLORS, FONT_SIZES, SPACING, normaSizes } from '../constants';
+
+const { width } = Dimensions.get('window');
+const categoryItemWidth = (width - 48) / 2; // 2 items per row with margins
+
+export const createSearchStyles = () => {
+    return StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: COLORS.primary,
+        },
+        header: {
+            paddingHorizontal: SPACING.md,
+            paddingTop: SPACING.md,
+            paddingBottom: SPACING.sm,
+        },
+        searchContainer: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            borderRadius: 25,
+            paddingHorizontal: SPACING.md,
+            paddingVertical: SPACING.sm,
+            marginBottom: SPACING.md,
+            shadowColor: '#000',
+            shadowOffset: {
+                width: 0,
+                height: 2,
+            },
+            shadowOpacity: 0.1,
+            shadowRadius: 3.84,
+            elevation: 5,
+        },
+        searchInput: {
+            flex: 1,
+            fontSize: normaSizes(FONT_SIZES.md),
+            color: COLORS.primary,
+            marginLeft: SPACING.sm,
+        },
+        clearButton: {
+            padding: SPACING.xs,
+        },
+        content: {
+            flex: 1,
+            paddingHorizontal: SPACING.md,
+        },
+        sectionTitle: {
+            fontSize: normaSizes(FONT_SIZES.lg),
+            fontWeight: 'bold',
+            color: COLORS.white,
+            marginBottom: SPACING.md,
+            textAlign: 'center',
+        },
+        categoriesGrid: {
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+        },
+        categoryCard: {
+            width: categoryItemWidth,
+            backgroundColor: 'white',
+            borderRadius: 12,
+            padding: SPACING.md,
+            marginBottom: SPACING.md,
+            borderBottomWidth: 4,
+            borderRightWidth: 4,
+            borderColor: COLORS.secondary,
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: 100,
+        },
+        categoryIcon: {
+            width: 40,
+            height: 40,
+            borderRadius: 20,
+            marginBottom: SPACING.sm,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        categoryName: {
+            fontSize: normaSizes(FONT_SIZES.sm),
+            fontWeight: 'bold',
+            color: COLORS.primary,
+            textAlign: 'center',
+        },
+        campaignsContainer: {
+            paddingBottom: SPACING.xl,
+        },
+        campanhaCard: {
+            flexDirection: 'row',
+            width: '100%',
+            backgroundColor: '#ffffffff',
+            borderRadius: 12,
+            borderRightWidth: 7,
+            borderBottomWidth: 7,
+            borderColor: COLORS.secondary,
+            paddingBottom: 15,
+            marginVertical: SPACING.sm,
+            alignItems: 'center'
+        },
+        campanhaTitle: {
+            fontSize: normaSizes(20),
+            fontWeight: 'bold',
+            color: COLORS.primary,
+            textAlign: 'center',
+        },
+        campanhaLojaNome: {
+            fontSize: normaSizes(16),
+            fontWeight: 'bold',
+        },
+        campanhaDescription: {
+            fontSize: normaSizes(14),
+            color: COLORS.gray,
+            marginTop: SPACING.xs,
+            textAlign: 'center',
+            fontStyle: 'italic',
+        },
+        campanhaImageContainer: {
+            width: normaSizes(100),
+            borderRadius: 100,
+            borderColor: COLORS.secondary,
+            marginRight: SPACING.sm,
+            overflow: 'hidden',
+        },
+        campanhaImage: {
+            width: '100%',
+            height: normaSizes(100),
+            backgroundColor: '#222',
+        },
+        campanhaInfo: {
+            width: '100%',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: 4,
+            padding: SPACING.sm,
+            alignItems: 'flex-start',
+        },
+        cupomContainer: {
+            width: normaSizes(120),
+            height: normaSizes(100),
+            backgroundColor: COLORS.primary,
+            paddingVertical: SPACING.xs,
+            marginRight: SPACING.sm,
+            borderRadius: 10,
+            borderBottomWidth: normaSizes(6),
+            borderRightWidth: normaSizes(6),
+            borderColor: COLORS.secondary,
+            shadowColor: '#000',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        cupomText: {
+            color: COLORS.white,
+            fontWeight: 'bold',
+            marginHorizontal: SPACING.sm,
+            fontStyle: 'italic'
+        },
+        cupomTipoBox: {
+            position: 'absolute',
+            backgroundColor: COLORS.secondary,
+            paddingHorizontal: normaSizes(1),
+            paddingVertical: normaSizes(4),
+            borderRadius: 6,
+        },
+        cupomTipoText: {
+            color: COLORS.primary,
+            fontSize: normaSizes(FONT_SIZES.lg),
+            fontWeight: 'bold',
+            marginHorizontal: SPACING.sm,
+        },
+        cupomRestamBox: {
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            backgroundColor: '#ffffffff',
+            borderTopRightRadius: 4,
+            paddingHorizontal: 4,
+        },
+        cupomRestamText: {
+            color: COLORS.primary,
+            fontSize: normaSizes(12),
+            fontStyle: 'italic',
+        },
+        cupomOffBox: {
+            position: 'absolute',
+            top: normaSizes(60),
+            right: 0,
+            backgroundColor: '#ffdb3bff',
+            paddingHorizontal: 4,
+            paddingVertical: 2,
+            borderTopLeftRadius: 4,
+            borderBottomLeftRadius: 4
+        },
+        cupomOffBoxText: {
+            color: COLORS.black,
+            fontSize: normaSizes(11),
+        },
+        cupomTituloBox: {
+            position: 'absolute',
+            top: 0,
+            paddingHorizontal: 3,
+            paddingVertical: 2,
+            backgroundColor: COLORS.secondary,
+            borderBottomLeftRadius: 5,
+            borderBottomRightRadius: 5,
+        },
+        cupomTituloBoxText: {
+            color: COLORS.white,
+            fontSize: normaSizes(11),
+        },
+        timeToEnd: {
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            backgroundColor: '#ffe797ff',
+            padding: 4,
+            borderBottomRightRadius: 8,
+            borderBottomLeftRadius: 8,
+        },
+        noResultsContainer: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingVertical: SPACING.xl,
+        },
+        noResultsText: {
+            fontSize: normaSizes(FONT_SIZES.md),
+            color: COLORS.white,
+            textAlign: 'center',
+            marginTop: SPACING.md,
+        },
+        loadingContainer: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+    });
+};
