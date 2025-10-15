@@ -341,6 +341,27 @@ export default function EditarDados() {
             <Text style={{ color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>Alterar Senha</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={() => navigation.navigate('CampanhasList')}
+            style={styles.buttonMenu}
+          >
+            <Ionicons name="megaphone-outline" size={20} color="#FFF" />
+            <Text style={{ color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>Campanhas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('CuponsList')}
+            style={styles.buttonMenu}
+          >
+            <Ionicons name="ticket-outline" size={20} color="#FFF" />
+            <Text style={{ color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>Cupons</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('LojasList')}
+            style={styles.buttonMenu}
+          >
+            <Ionicons name="storefront-outline" size={20} color="#FFF" />
+            <Text style={{ color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>Lojas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => navigation.navigate('UserFaq')}
             style={[styles.buttonMenu, { width: '100%' }]}
           >

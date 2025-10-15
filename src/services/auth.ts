@@ -4,7 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 
 export const login = async (email: string, telefone: string, pass: string) => {
     try {
-        const response = await api.post('/auth/login', { email, telefone, pass });
+        const response = await api.post('/auth/lojista', { email, telefone, pass });
 
         await SecureStore.setItemAsync('token', response.data.token);
         await SecureStore.setItemAsync('user', JSON.stringify(response.data.userData));

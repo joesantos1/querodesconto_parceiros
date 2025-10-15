@@ -8,6 +8,12 @@ import CupomDetalhes from '../pages/Cupom/Detalhes';
 import UserDados from '../pages/User/UserDados';
 import UserTrocaSenha from '../pages/User/UserTrocaSenha';
 import UserFaq from '../pages/User/UserFaq';
+import CampanhasList from '../pages/Campanha/List';
+import CampanhaCreateEdit from '../pages/Campanha/CreateEdit';
+import CuponsList from '../pages/Cupom/List';
+import CupomCreateEdit from '../pages/Cupom/createEdit';
+import LojasList from '../pages/Loja/List';
+import LojaCreateEdit from '../pages/Loja/CreateEdit';
 import { RootStackParamList } from '../types';
 import { ActivityIndicator, View } from 'react-native';
 import { useAuth } from '@/contexts/AuthContext';
@@ -48,6 +54,12 @@ export default function AppNavigator() {
       <Stack.Screen name="UserDados" component={UserDados} />
       <Stack.Screen name="UserTrocaSenha" component={UserTrocaSenha} />
       <Stack.Screen name="UserFaq" component={UserFaq} />
+      <Stack.Screen name="CampanhasList" component={CampanhasList} />
+      <Stack.Screen name="CampanhaCreateEdit" component={CampanhaCreateEdit} />
+      <Stack.Screen name="CuponsList" component={CuponsList} />
+      <Stack.Screen name="CupomCreateEdit" component={CupomCreateEdit} />
+      <Stack.Screen name="LojasList" component={LojasList} />
+      <Stack.Screen name="LojaCreateEdit" component={LojaCreateEdit} />
     </Stack.Navigator>
   );
 }

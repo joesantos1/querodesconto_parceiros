@@ -9,6 +9,12 @@ export type RootStackParamList = {
   UserDados: undefined;
   UserTrocaSenha: undefined;
   UserFaq: undefined;
+  CampanhasList: undefined;
+  CampanhaCreateEdit: { campanhaId?: number } | undefined;
+  CuponsList: undefined;
+  CupomCreateEdit: { cupomId?: number; campanhaId?: number } | undefined;
+  LojasList: undefined;
+  LojaCreateEdit: { lojaId?: number } | undefined;
 };
 
 // Tipos para o Tab Navigator
@@ -64,6 +70,38 @@ export interface Campanha {
   data_inicio: Date;
   data_fim: Date;
   status: number;
+  loja_id?: number;
+  loja?: Loja;
+}
+
+// Interface para campanhas com dados completos (para lista)
+export interface CampanhaCompleta extends Omit<Campanha, 'loja'> {
+  loja: {
+    id: number;
+    nome: string;
+    logo: string;
+  };
+  cupons_count?: number;
+  cupons_ativos?: number;
+}
+
+// Interface para formulário de campanha
+export interface CampanhaFormData {
+  titulo: string;
+  descricao: string;
+  data_inicio: Date;
+  data_fim: Date;
+  status: number;
+  loja_id?: number;
+}
+
+// Interface para validação de formulário
+export interface CampanhaFormErrors {
+  titulo?: string;
+  descricao?: string;
+  data_inicio?: string;
+  data_fim?: string;
+  loja_id?: string;
 }
 
 export interface Loja {
@@ -83,6 +121,43 @@ export interface Loja {
   localizacao_link?: string;
 }
 
+// Interface para formulário de loja
+export interface LojaFormData {
+  nome: string;
+  endereco: string;
+  cidade_id: number;
+  telefone1: string;
+  telefone2: string;
+  email: string;
+  site: string;
+  status: number;
+  logo?: string;
+  descricao: string;
+  cnpj: string;
+  localizacao_link: string;
+}
+
+// Interface para validação de formulário de loja
+export interface LojaFormErrors {
+  nome?: string;
+  endereco?: string;
+  cidade_id?: string;
+  telefone1?: string;
+  telefone2?: string;
+  email?: string;
+  site?: string;
+  descricao?: string;
+  cnpj?: string;
+  localizacao_link?: string;
+}
+
+// Interface para loja com dados completos (para lista)
+export interface LojaCompleta extends Loja {
+  categorias?: Categorias[];
+  campanhas_count?: number;
+  cupons_count?: number;
+}
+
 export interface Cupom {
   id: number;
   valor: number;
@@ -97,6 +172,42 @@ export interface Cupom {
   campanha?: Campanha;
   loja?: Loja;
   loja_id?: number;
+}
+
+// Interface para formulário de cupom
+export interface CupomFormData {
+  valor: number;
+  tipo: 'valor' | 'percentual';
+  qtd: number;
+  codigo: string;
+  validade: number;
+  regras: { [key: string]: string }[];
+  campanha_id: number;
+  status: number;
+}
+
+// Interface para validação de formulário de cupom
+export interface CupomFormErrors {
+  valor?: string;
+  tipo?: string;
+  qtd?: string;
+  codigo?: string;
+  validade?: string;
+  campanha_id?: string;
+}
+
+// Interface para cupom com dados completos (para lista)
+export interface CupomCompleto extends Omit<Cupom, 'campanha' | 'loja'> {
+  campanha: {
+    id: number;
+    titulo: string;
+    status: number;
+  };
+  loja: {
+    id: number;
+    nome: string;
+    logo?: string;
+  };
 }
 
 export interface CupomDetalhes extends Cupom {
@@ -126,3 +237,22 @@ export interface Categorias {
   nome: string;
   cor: string;
 }
+
+// Enums para status
+export enum CampanhaStatus {
+  INATIVA = 0,
+  ATIVA = 1,
+  SUSPENSA = 2,
+  FINALIZADA = 3,
+}
+
+export enum CupomStatus {
+  INATIVO = 0,
+  ATIVO = 1,
+  ESGOTADO = 2,
+  EXPIRADO = 3,
+}
+
+// Tipos utilitários
+export type StatusCampanha = 'ativa' | 'inativa' | 'suspensa' | 'finalizada';
+export type StatusCupom = 'ativo' | 'inativo' | 'esgotado' | 'expirado';
