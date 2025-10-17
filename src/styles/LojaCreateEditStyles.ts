@@ -134,6 +134,30 @@ export const createLojaCreateEditStyles = () => {
     requiredLabel: {
       color: COLORS.danger,
     },
+    categoryContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: SPACING.sm,
+    },
+    categoryButton: {
+      paddingHorizontal: SPACING.md,
+      paddingVertical: SPACING.sm,
+      borderRadius: 20,
+      borderWidth: 1,
+      borderColor: COLORS.grayLight,
+    },
+    categoryButtonSelected: {
+      backgroundColor: COLORS.primary,
+      borderColor: COLORS.primary,
+    },
+    categoryButtonText: {
+      fontSize: normaSizes(FONT_SIZES.md),
+      color: COLORS.white,
+    },
+    categoryButtonTextSelected: {
+      color: COLORS.white,
+      fontWeight: 'bold',
+    },
     input: {
       borderWidth: 1,
       borderColor: COLORS.grayLight,

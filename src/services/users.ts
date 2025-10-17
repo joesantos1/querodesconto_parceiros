@@ -8,7 +8,7 @@ export const createUser = async (userData: any) => {
       'Content-Type': 'application/json'
     }
   };
-    return api.post('/usuarios', userData, config).then(r => r.data);
+    return api.post('/lojistas', userData, config).then(r => r.data);
   } catch (error) {
     console.log('Erro ao criar usuário:', error);
     throw error;
@@ -35,7 +35,7 @@ export const updateUser = async (userData: any) => {
         'Content-Type': 'application/json'
       }
     };
-    return api.put(`/usuarios`, userData, config).then(r => r.data);
+    return api.put(`/lojistas`, userData, config).then(r => r.data);
   } catch (error) {
     throw error;
   }
@@ -64,7 +64,7 @@ export const updateUserPushToken = async (expo_push_token: string) => {
         'Content-Type': 'application/json'
       }
     };
-    return api.put(`/usuarios/push-token`, { expo_push_token }, config).then(r => r.data);
+    return api.put(`/lojistas/push-token`, { expo_push_token }, config).then(r => r.data);
   } catch (error) {
     console.log('Erro ao atualizar token de push do usuário:', error);
     throw error;
@@ -83,7 +83,7 @@ export const getIdUsuarioAfiliado = async (codigo: string) => {
 };
 export const getNewPassword = async (email: string) => {
   try {
-    const r = await api.post(`/usuarios/novasenha`, { email });  
+    const r = await api.post(`/lojistas/novasenha`, { email });
     return r.data;
   } catch (error) {
     console.log('Erro ao solicitar nova senha:', error);
@@ -92,7 +92,7 @@ export const getNewPassword = async (email: string) => {
 };
 export const editPassword = async (userData: any) => {
   try {
-    return api.put(`/usuarios/senha`, userData).then(r => r.data);
+    return api.put(`/lojistas/senha`, userData).then(r => r.data);
   } catch (error) {
     console.log('Erro ao editar senha do usuário:', error);
     throw error;
@@ -100,7 +100,7 @@ export const editPassword = async (userData: any) => {
 };
 export const sendEmailContato = async (emailData: any) => {
   try {
-    const response = await api.post('/usuarios/contato-suporte', emailData);
+    const response = await api.post('/lojistas/contato-suporte', emailData);
     return response.data;
   } catch (error) {
     console.error('Error sending email:', error);

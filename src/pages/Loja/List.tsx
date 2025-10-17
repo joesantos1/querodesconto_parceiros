@@ -4,30 +4,28 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Image,
   Alert,
   ActivityIndicator,
   RefreshControl,
   Linking,
 } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation, useFocusEffect, NavigationProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { ButtonBack } from '../../components/ButtonBack';
 import { createLojasListStyles } from '../../styles/LojasListStyles';
 import { getMyStores, deleteStore } from '../../services/stores';
 import { getCities } from '../../services/city';
-import { Loja, Cidade } from '../../types';
+import { Loja, Cidade, RootStackParamList } from '../../types';
 import { COLORS } from '../../constants';
-
-interface LojaWithCity extends Loja {
-  cidade_nome?: string;
-}
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Image } from 'expo-image';
+import { urlToLojasLogo } from '@/utils/utils';
 
 export default function LojasList() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const styles = createLojasListStyles();
-  
-  const [lojas, setLojas] = useState<LojaWithCity[]>([]);
+
+  const [lojas, setLojas] = useState<Loja[]>([]);
   const [cidades, setCidades] = useState<Cidade[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -44,17 +42,8 @@ export default function LojasList() {
   const loadLojas = async () => {
     try {
       const response = await getMyStores();
-      
-      // Enriquecer lojas com nome da cidade
-      const lojasWithCity = response.map((loja: Loja) => {
-        const cidade = cidades.find(c => c.id === loja.cidade_id);
-        return {
-          ...loja,
-          cidade_nome: cidade?.cidade || 'Cidade não encontrada'
-        };
-      });
-      
-      setLojas(lojasWithCity);
+
+      setLojas(response);
     } catch (error) {
       console.error('Erro ao carregar lojas:', error);
       Alert.alert('Erro', 'Não foi possível carregar as lojas');
@@ -66,30 +55,21 @@ export default function LojasList() {
 
   useFocusEffect(
     useCallback(() => {
-      const loadData = async () => {
-        setLoading(true);
-        await loadCities();
-      };
-      loadData();
+      loadLojas();
+      loadCities();
     }, [])
   );
-
-  useEffect(() => {
-    if (cidades.length > 0) {
-      loadLojas();
-    }
-  }, [cidades]);
 
   const onRefresh = () => {
     setRefreshing(true);
     loadLojas();
   };
 
-  const handleEditLoja = (loja: LojaWithCity) => {
+  const handleEditLoja = (loja: Loja) => {
     (navigation as any).navigate('LojaCreateEdit', { lojaId: loja.id });
   };
 
-  const handleDeleteLoja = (loja: LojaWithCity) => {
+  const handleDeleteLoja = (loja: Loja) => {
     Alert.alert(
       'Confirmar Exclusão',
       `Tem certeza que deseja excluir a loja "${loja.nome}"?\n\nEsta ação não pode ser desfeita.`,
@@ -162,17 +142,23 @@ export default function LojasList() {
     }
   };
 
-  const renderLojaCard = ({ item: loja }: { item: LojaWithCity }) => (
+  const renderLojaCard = ({ item: loja }: { item: Loja }) => (
     <View style={styles.lojaCard}>
       <View style={styles.lojaHeader}>
         {loja.logo ? (
-          <Image source={{ uri: loja.logo }} style={styles.lojaLogo} />
+          <Image
+            source={urlToLojasLogo(loja.logo)}
+            style={styles.lojaLogo}
+            contentFit='cover'
+            transition={500}
+            cachePolicy={'memory-disk'}
+          />
         ) : (
           <View style={[styles.lojaLogo, { justifyContent: 'center', alignItems: 'center' }]}>
             <Ionicons name="storefront-outline" size={32} color={COLORS.gray} />
           </View>
         )}
-        
+
         <View style={styles.lojaInfo}>
           <Text style={styles.lojaNome} numberOfLines={2}>
             {loja.nome}
@@ -183,7 +169,7 @@ export default function LojasList() {
             </Text>
           ) : null}
           <Text style={styles.lojaCidade}>
-            {loja.cidade_nome}
+            {loja.cidade.cidade} - {loja.cidade.estado}
           </Text>
         </View>
       </View>
@@ -191,7 +177,7 @@ export default function LojasList() {
       {/* Informações de contato */}
       <View style={styles.contactInfo}>
         {loja.telefone1 && (
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.contactItem}
             onPress={() => callPhone(loja.telefone1)}
           >
@@ -201,9 +187,9 @@ export default function LojasList() {
             </Text>
           </TouchableOpacity>
         )}
-        
+
         {loja.email && (
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.contactItem}
             onPress={() => sendEmail(loja.email)}
           >
@@ -213,9 +199,9 @@ export default function LojasList() {
             </Text>
           </TouchableOpacity>
         )}
-        
+
         {loja.site && (
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.contactItem}
             onPress={() => openWebsite(loja.site)}
           >
@@ -225,9 +211,9 @@ export default function LojasList() {
             </Text>
           </TouchableOpacity>
         )}
-        
+
         {loja.localizacao_link && (
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.contactItem}
             onPress={() => loja.localizacao_link && openLocation(loja.localizacao_link)}
           >
@@ -273,22 +259,37 @@ export default function LojasList() {
 
       {/* Ações */}
       <View style={styles.actionsContainer}>
-        <TouchableOpacity 
+        <TouchableOpacity
+          style={[styles.actionButton, styles.editButton]}
+          onPress={() => navigation.navigate('CampanhasList')}
+        >
+          <Ionicons name="megaphone" size={16} color={COLORS.white} />
+          <Text style={styles.actionButtonText}>Campanhas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.actionButton, styles.editButton]}
+          onPress={() => navigation.navigate('ColabTeam', { 
+            lojaId: loja.id, 
+            lojaNome: loja.nome 
+          })}
+        >
+          <Ionicons name="people" size={16} color={COLORS.white} />
+          <Text style={styles.actionButtonText}>Equipe</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={[styles.actionButton, styles.editButton]}
           onPress={() => handleEditLoja(loja)}
         >
           <Ionicons name="pencil" size={16} color={COLORS.white} />
           <Text style={styles.actionButtonText}>Editar</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={[styles.actionButton, styles.deleteButton]}
-          onPress={() => handleDeleteLoja(loja)}
-        >
-          <Ionicons name="trash" size={16} color={COLORS.white} />
-          <Text style={styles.actionButtonText}>Excluir</Text>
-        </TouchableOpacity>
       </View>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => handleDeleteLoja(loja)}
+      >
+        <Ionicons name="trash" size={16} color={COLORS.white} />
+      </TouchableOpacity>
     </View>
   );
 
@@ -328,10 +329,11 @@ export default function LojasList() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+
       <View style={styles.header}>
+        <ButtonBack goTo="back" type={2} />
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <ButtonBack goTo="back" />
           <Text style={styles.headerTitle}>Minhas Lojas</Text>
         </View>
         <TouchableOpacity
@@ -358,6 +360,6 @@ export default function LojasList() {
         }
         ListEmptyComponent={renderEmptyState}
       />
-    </View>
+    </SafeAreaView>
   );
 }

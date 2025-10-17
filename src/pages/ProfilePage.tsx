@@ -150,55 +150,6 @@ export default function EditarDados() {
     return null;
   }
 
-
-  const handlePickImage = async () => {
-    try {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert('Permissão negada', 'É necessário permitir acesso à galeria.');
-        return;
-      }
-
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ['images'],
-        allowsEditing: true,
-        quality: 0.5,
-        aspect: [1, 1],
-        base64: false,
-      });
-
-      if (!result.canceled && result.assets && result.assets[0]) {
-        const asset = result.assets[0];
-
-        // Corrigir URI para Android
-        let uri = asset.uri;
-        if (Platform.OS === 'android' && !uri.startsWith('file://')) {
-          uri = 'file://' + uri;
-        }
-
-        // Garantir nome e type válidos
-        const name = asset.fileName || `foto_${Date.now()}.jpg`;
-
-        // Corrigir o type para sempre ser um MIME type válido
-        let mimeType = asset.type === 'image' || !asset.type
-          ? (name.endsWith('.png') ? 'image/png'
-            : (name.endsWith('.jpg') || name.endsWith('.jpeg')) ? 'image/jpeg'
-              : 'image/jpeg')
-          : asset.type;
-
-        setFoto(uri);
-        setFotoFile({
-          uri,
-          name,
-          type: mimeType,
-        });
-      }
-    } catch (error) {
-      //console.error('Erro ao selecionar imagem:', error);
-      Alert.alert('Erro', 'Não foi possível selecionar a imagem.');
-    }
-  };
-
   const handleTakePhoto = async () => {
     try {
       const { status } = await ImagePicker.requestCameraPermissionsAsync();
@@ -325,12 +276,26 @@ export default function EditarDados() {
         <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
           {/* Menu de botões para paginas de usuários */}
           <TouchableOpacity
+            onPress={() => navigation.navigate('LojasList')}
+            style={styles.buttonMenu}
+          >
+            <Ionicons name="storefront-outline" size={20} color="#FFF" />
+            <Text style={{ color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>Lojas</Text>
+          </TouchableOpacity>
+              <TouchableOpacity
+            onPress={() => navigation.navigate('CampanhasList')}
+            style={styles.buttonMenu}
+          >
+            <Ionicons name="megaphone-outline" size={20} color="#FFF" />
+            <Text style={{ color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>Campanhas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => navigation.navigate('UserDados')}
             style={styles.buttonMenu}
           >
             <Ionicons name="create-outline" size={20} color="#FFF" />
             <Text style={{ color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>
-              Editar Dados
+              Editar Meus Dados
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -341,29 +306,8 @@ export default function EditarDados() {
             <Text style={{ color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>Alterar Senha</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('CampanhasList')}
-            style={styles.buttonMenu}
-          >
-            <Ionicons name="megaphone-outline" size={20} color="#FFF" />
-            <Text style={{ color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>Campanhas</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('CuponsList')}
-            style={styles.buttonMenu}
-          >
-            <Ionicons name="ticket-outline" size={20} color="#FFF" />
-            <Text style={{ color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>Cupons</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('LojasList')}
-            style={styles.buttonMenu}
-          >
-            <Ionicons name="storefront-outline" size={20} color="#FFF" />
-            <Text style={{ color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>Lojas</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
             onPress={() => navigation.navigate('UserFaq')}
-            style={[styles.buttonMenu, { width: '100%' }]}
+            style={[styles.buttonMenu, {width: '100%'}]}
           >
             <Ionicons name="help-circle-outline" size={20} color="#FFF" />
             <Text style={{ color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>Ajuda</Text>

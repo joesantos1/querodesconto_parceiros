@@ -44,6 +44,13 @@ export const createCupomCreateEditStyles = () => {
       color: COLORS.gray,
       textAlign: 'center',
     },
+    title:{
+      fontSize: normaSizes(FONT_SIZES.lg),
+      fontWeight: 'bold',
+      color: COLORS.dark,
+      marginBottom: SPACING.md,
+      textAlign: 'center',
+    },
     scrollView: {
       flex: 1,
     },
@@ -244,6 +251,36 @@ export const createCupomCreateEditStyles = () => {
       color: COLORS.gray,
       fontWeight: '600',
     },
+    regrasContainer: {
+      flexDirection: 'column',
+      gap: SPACING.md,
+    },
+      regraRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: SPACING.sm,
+      marginVertical: SPACING.sm,
+    },
+    regrasInput: {
+      flex: 1,
+      paddingVertical: SPACING.sm,
+      paddingRight: SPACING.md,
+      fontSize: normaSizes(FONT_SIZES.md),
+      color: COLORS.dark,
+      minHeight: 48,
+    },
+    addRegraButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    regraLabel: {
+      fontSize: normaSizes(FONT_SIZES.md),
+      color: COLORS.primary,
+      fontWeight: '600',
+    },
+    deleteRegraButton: {
+      padding: SPACING.xs,
+    },
     previewContainer: {
       backgroundColor: COLORS.light,
       padding: SPACING.md,
@@ -286,13 +323,32 @@ export const createCupomCreateEditStyles = () => {
     cancelButton: {
       flex: 1,
       backgroundColor: COLORS.grayLight,
+      width: '50%'
     },
     saveButton: {
       flex: 1,
       backgroundColor: COLORS.primary,
+      width: '50%'
     },
     saveButtonDisabled: {
       backgroundColor: COLORS.gray,
+    },
+    lastCuponsItem: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: 10,
+      borderRadius: 8,
+      marginVertical: SPACING.sm,
+      backgroundColor: COLORS.white,
+    },
+    lastCuponStats: {
+      fontSize: normaSizes(FONT_SIZES.md),
+      color: COLORS.dark,
+      padding: SPACING.xs,
+      borderRadius: 6,
+      backgroundColor: COLORS.light,
     },
   });
 };

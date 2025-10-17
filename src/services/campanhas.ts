@@ -2,7 +2,7 @@ import api from './api';
 
 export const getAllCampanhas = async () => {
   try {
-    const response = await api.get('/campanhas');
+    const response = await api.get('/campanhas/lojista');
     return response.data;
   } catch (error) {
     throw error;
@@ -11,7 +11,7 @@ export const getAllCampanhas = async () => {
 
 export const getMyCampanhas = async () => {
   try {
-    const response = await api.get(`/campanhas/minhas-campanhas`);
+    const response = await api.get(`/campanhas/lojista`);
     return response.data;
   } catch (error) {
     throw error;

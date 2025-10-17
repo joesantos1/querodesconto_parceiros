@@ -35,7 +35,7 @@ export default function CampanhasList() {
     try {
       setLoading(true);
       const data = await getMyCampanhas();
-      setCampanhas(data || []);
+      setCampanhas(data.campaigns || []);
     } catch (error) {
       console.error('Erro ao buscar campanhas:', error);
       Alert.alert('Erro', 'Não foi possível carregar as campanhas');
@@ -127,13 +127,13 @@ export default function CampanhasList() {
           contentFit="cover"
         />
       )}
-      
+
       <View style={styles.campanhaContent}>
-        <Text style={styles.campanhaTitle}>{item.titulo}</Text>
+        <Text style={styles.campanhaTitle}><Ionicons name="megaphone" size={16} color={COLORS.primary} /> {item.titulo}</Text>
         <Text style={styles.campanhaDescription} numberOfLines={2}>
           {item.descricao}
         </Text>
-        
+
         <View style={styles.dateContainer}>
           <Text style={styles.dateText}>
             Início: {new Date(item.data_inicio).toLocaleDateString('pt-BR')}
@@ -177,8 +177,8 @@ export default function CampanhasList() {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: COLORS.info }]}
-            onPress={() => navigation.navigate('CuponsList')}
+            style={[styles.actionButton, { backgroundColor: COLORS.black }]}
+            onPress={() => navigation.navigate('CuponsList', { campanhaId: item.id })}
           >
             <Ionicons name="list" size={16} color={COLORS.white} />
             <Text style={styles.actionButtonText}>Ver Cupons</Text>
@@ -202,7 +202,7 @@ export default function CampanhasList() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <ButtonBack goTo="back" />
+        <ButtonBack goToScreen={['TabNavigator', 'Profile']} type={2} />
         <Text style={styles.headerTitle}>Minhas Campanhas</Text>
         <TouchableOpacity onPress={handleCreateCampanha} style={styles.addButton}>
           <Ionicons name="add" size={24} color={COLORS.primary} />

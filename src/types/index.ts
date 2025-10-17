@@ -11,17 +11,18 @@ export type RootStackParamList = {
   UserFaq: undefined;
   CampanhasList: undefined;
   CampanhaCreateEdit: { campanhaId?: number } | undefined;
-  CuponsList: undefined;
+  CuponsList: { campanhaId?: number } | undefined;
   CupomCreateEdit: { cupomId?: number; campanhaId?: number } | undefined;
   LojasList: undefined;
   LojaCreateEdit: { lojaId?: number } | undefined;
+  ColabTeam: { lojaId: number; lojaNome?: string };
 };
 
 // Tipos para o Tab Navigator
 export type TabParamList = {
   Home: undefined;
   Search: undefined;
-  MeusCupons: undefined;
+  ValidaCupom: undefined;
   Profile: undefined;
   Login: undefined;
 };
@@ -89,10 +90,10 @@ export interface CampanhaCompleta extends Omit<Campanha, 'loja'> {
 export interface CampanhaFormData {
   titulo: string;
   descricao: string;
-  data_inicio: Date;
-  data_fim: Date;
+  data_inicio: string;
+  data_fim: string;
   status: number;
-  loja_id?: number;
+  loja_id: number;
 }
 
 // Interface para validação de formulário
@@ -117,8 +118,15 @@ export interface Loja {
   logo?: string;
   descricao?: string;
   cnpj: string;
-  cidade?: Cidade;
+  cidade: Cidade;
   localizacao_link?: string;
+}
+
+export interface Categorias {
+  id: number;
+  nome: string;
+  cor: string;
+  icone?: string;
 }
 
 // Interface para formulário de loja
@@ -131,10 +139,10 @@ export interface LojaFormData {
   email: string;
   site: string;
   status: number;
-  logo?: string;
   descricao: string;
   cnpj: string;
   localizacao_link: string;
+  categoria_ids?: number[];
 }
 
 // Interface para validação de formulário de loja
@@ -149,6 +157,7 @@ export interface LojaFormErrors {
   descricao?: string;
   cnpj?: string;
   localizacao_link?: string;
+  categoria_ids?: string;
 }
 
 // Interface para loja com dados completos (para lista)
@@ -167,7 +176,7 @@ export interface Cupom {
   usados: number;
   codigo: string;
   validade: number;
-  regras: { [key: string]: string }[];
+  regras: { [key: string]: string };
   campanha_id: number;
   campanha?: Campanha;
   loja?: Loja;
@@ -177,12 +186,13 @@ export interface Cupom {
 // Interface para formulário de cupom
 export interface CupomFormData {
   valor: number;
-  tipo: 'valor' | 'percentual';
+  tipo: 'R$' | '%';
   qtd: number;
   codigo: string;
   validade: number;
-  regras: { [key: string]: string }[];
+  regras: { [key: string]: string };
   campanha_id: number;
+  loja_id?: number;
   status: number;
 }
 

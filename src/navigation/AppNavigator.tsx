@@ -14,6 +14,7 @@ import CuponsList from '../pages/Cupom/List';
 import CupomCreateEdit from '../pages/Cupom/createEdit';
 import LojasList from '../pages/Loja/List';
 import LojaCreateEdit from '../pages/Loja/CreateEdit';
+import ColabTeam from '../pages/Loja/ColabTeam';
 import { RootStackParamList } from '../types';
 import { ActivityIndicator, View } from 'react-native';
 import { useAuth } from '@/contexts/AuthContext';
@@ -36,12 +37,11 @@ export default function AppNavigator() {
     return (
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="TabNavigator"
+        initialRouteName="Login"
       >
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="NewPass" component={NewPass} />
-        <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Navigator>
     );
   }
@@ -60,6 +60,7 @@ export default function AppNavigator() {
       <Stack.Screen name="CupomCreateEdit" component={CupomCreateEdit} />
       <Stack.Screen name="LojasList" component={LojasList} />
       <Stack.Screen name="LojaCreateEdit" component={LojaCreateEdit} />
+      <Stack.Screen name="ColabTeam" component={ColabTeam} />
     </Stack.Navigator>
   );
 }

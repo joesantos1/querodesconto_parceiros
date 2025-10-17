@@ -47,7 +47,9 @@
         "backgroundColor": "#ffffff"
       },
       "permissions": [
-        "NOTIFICATIONS"
+        "NOTIFICATIONS",
+        "CAMERA",
+        "RECORD_AUDIO"
       ],
       "edgeToEdgeEnabled": true,
       "intentFilters": [

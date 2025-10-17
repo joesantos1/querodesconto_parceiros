@@ -21,8 +21,8 @@ export const createStyles = () => {
             marginBottom: SPACING.md
         },
         categoryButton: {
-            width: 110,
-            height: 60,
+            width: normaSizes(110),
+            height: normaSizes(60),
             paddingVertical: SPACING.sm,
             paddingHorizontal: SPACING.md,
             marginRight: SPACING.sm,
@@ -113,9 +113,20 @@ export const createStyles = () => {
             padding: SPACING.sm,
             alignItems: 'flex-start',
         },
+        editButton: {
+            position: 'absolute',
+            top: -15,
+            right: 10,
+            padding: SPACING.xs,
+            borderRadius: 5,
+            borderWidth: 1,
+            borderColor: COLORS.grayLight,
+            backgroundColor: 'white',
+            paddingVertical: SPACING.xs,
+        },
         cupomContainer: {
-            width: 130,
-            height: 80,
+            width: normaSizes(130),
+            height: normaSizes(80),
             backgroundColor: COLORS.primary,
             paddingVertical: SPACING.xs,
             marginRight: SPACING.sm,

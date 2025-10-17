@@ -31,6 +31,36 @@ export const setNewStoreCategory = async (categoryData: any) => {
     }
 };
 
+export const setLojistaStore = async (storeId: string, storeData: any) => {
+    try {
+        const response = await api.post(`/lojistas/store/${storeId}/assign`, storeData);
+        return response.data;
+    } catch (error) {
+        console.error('Error creating lojista store:', error);
+        throw error;
+    }
+};
+
+export const getLojistasByStoreId = async (storeId: string) => {
+    try {
+        const response = await api.get(`/lojistas/store/${storeId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching lojistas by store id:', error);
+        throw error;
+    }
+};
+
+export const removeLojistaFromStore = async (storeId: string, lojistaId: string) => {
+    try {
+        const response = await api.delete(`/lojistas/store/${storeId}/remove/${lojistaId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error removing lojista from store:', error);
+        throw error;
+    }
+};
+
 export const removeStoreCategory = async (categoryId: string) => {
     try {
         const response = await api.delete(`/lojas/categorias/${categoryId}`);
@@ -53,7 +83,7 @@ export const createNewStore = async (storeData: any) => {
 
 export const getMyStores = async () => {
     try {
-        const response = await api.get('/lojas/minhas-lojas');
+        const response = await api.get('/lojas/lojista');
         return response.data;
     } catch (error) {
         console.error('Error fetching my stores:', error);
@@ -61,9 +91,9 @@ export const getMyStores = async () => {
     }
 };
 
-export const getStoreById = async (storeId: string) => {
+export const getStoreToEditById = async (storeId: string) => {
     try {
-        const response = await api.get(`/lojas/${storeId}`);
+        const response = await api.get(`/lojas/edit/${storeId}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching store by id:', error);
@@ -92,7 +122,7 @@ export const deleteStore = async (storeId: string) => {
 
 export const updateLogoStore = async (storeId: string, logoData: any) => {
     try {
-        const response = await api.put(`/lojas/${storeId}/logo`, logoData, {
+        const response = await api.put(`/lojas/logo/${storeId}`, logoData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },

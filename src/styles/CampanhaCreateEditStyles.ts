@@ -12,6 +12,7 @@ export const createCampanhaCreateEditStyles = () => {
     header: {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'space-between',
       paddingHorizontal: SPACING.md,
       paddingVertical: SPACING.sm,
       borderBottomWidth: 1,
@@ -30,7 +31,6 @@ export const createCampanhaCreateEditStyles = () => {
       fontSize: normaSizes(FONT_SIZES.lg),
       fontWeight: 'bold',
       color: COLORS.dark,
-      marginLeft: SPACING.md,
     },
     loadingContainer: {
       flex: 1,
@@ -115,6 +115,65 @@ export const createCampanhaCreateEditStyles = () => {
     },
     dateInputContainer: {
       position: 'relative',
+    },
+    dateTimeContainer: {
+      flexDirection: 'row',
+      gap: SPACING.sm,
+    },
+    dateTimeButton: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: SPACING.md,
+      paddingVertical: SPACING.sm,
+      borderWidth: 1,
+      borderColor: COLORS.grayLight,
+      borderRadius: 8,
+      backgroundColor: COLORS.white,
+      minHeight: 44,
+      gap: SPACING.xs,
+    },
+    dateTimeButtonText: {
+      fontSize: normaSizes(FONT_SIZES.md),
+      color: COLORS.dark,
+      flex: 1,
+    },
+    modalOverlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: COLORS.black + '80',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    modalContainer: {
+      width: '90%',
+      backgroundColor: COLORS.white,
+      borderRadius: 12,
+      padding: SPACING.md,
+      marginBottom: SPACING.md,
+      shadowColor: COLORS.black,
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.05,
+      shadowRadius: 3.84,
+      elevation: 2,
+      borderWidth: 1,
+      borderColor: COLORS.grayLight,
+    },
+    pickerContainer: {
+      borderWidth: 1,
+      borderColor: COLORS.grayLight,
+      borderRadius: 8,
+      overflow: 'hidden',
+      minHeight: 48
+    },
+    picker: {
+      color: COLORS.dark,
     },
     dateInput: {
       flexDirection: 'row',

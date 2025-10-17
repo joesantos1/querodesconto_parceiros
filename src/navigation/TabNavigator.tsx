@@ -8,8 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 
 // Importar as páginas
 import HomePage from '../pages/HomePage';
-import SearchPage from '../pages/SearchPage';
-import MeusCuponsPage from '../pages/MeusCuponsPage';
+import ValidaCupom from '@/pages/Cupom/validaCupom';
 import ProfilePage from '../pages/ProfilePage';
 import Login from '../pages/Login';
 
@@ -31,7 +30,7 @@ export default function TabNavigator() {
 
           switch (route.name) {
             case 'Home':
-              iconName = focused ? 'storefront' : 'storefront-outline';
+              iconName = focused ? 'megaphone' : 'megaphone-outline';
               break;
             case 'Search':
               iconName = focused ? 'search' : 'search-outline';
@@ -39,11 +38,11 @@ export default function TabNavigator() {
             case 'Login':
               iconName = focused ? 'log-in' : 'log-in-outline';
               break;
-            case 'MeusCupons':
+            case 'ValidaCupom':
               iconName = focused ? 'qr-code' : 'qr-code-outline';
               break;
             case 'Profile':
-              iconName = focused ? 'person' : 'person-outline';
+              iconName = focused ? 'storefront' : 'storefront-outline';
               break;
             default:
               iconName = 'home-outline';
@@ -53,7 +52,7 @@ export default function TabNavigator() {
         },
         tabBarActiveTintColor: COLORS.primary,
         tabBarInactiveTintColor: COLORS.gray,
-        tabBarStyle: styles.tabBar, height: Platform.OS === 'ios' ? 70 + insets.bottom : insets.bottom + 60,
+        tabBarStyle: styles.tabBar,
         tabBarLabelStyle: styles.tabBarLabel,
         headerShown: false,
       })}
@@ -62,24 +61,16 @@ export default function TabNavigator() {
         name="Home"
         component={HomePage}
         options={{
-          tabBarLabel: 'Início',
+          tabBarLabel: 'Campanhas',
         }}
       />
-      <Tab.Screen
-        name="Search"
-        component={SearchPage}
-        options={{
-          tabBarLabel: 'Buscar',
-        }}
-      />
-
       {isAuthenticated ? (
         <>
           <Tab.Screen
-            name="MeusCupons"
-            component={MeusCuponsPage}
+            name="ValidaCupom"
+            component={ValidaCupom}
             options={{
-              tabBarLabel: 'Meus Cupons',
+              tabBarLabel: 'Validar Cupom',
             }}
           />
 
@@ -87,7 +78,7 @@ export default function TabNavigator() {
             name="Profile"
             component={ProfilePage}
             options={{
-              tabBarLabel: 'Perfil',
+              tabBarLabel: 'Lojista',
             }}
           />
         </>
@@ -106,10 +97,11 @@ export default function TabNavigator() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#ffffffff',
     borderTopWidth: 1,
     borderTopColor: '#E5E5EA',
     paddingTop: 5,
+    height: 80,
   },
   tabBarLabel: {
     fontSize: 12,

@@ -36,7 +36,8 @@ export default function HomePage() {
       setCampanhas(data.campaigns || []);
       setCategories(data.categorias || []);
 
-      //console.log('Campanhas fetched:', data);
+      //console.log('Campanhas fetched:', data.campaigns);
+      ///console.log('Fetched categories:', data.categorias);
     } catch (error) {
       console.error('Error fetching campanhas:', error);
     } finally {
@@ -146,6 +147,13 @@ export default function HomePage() {
           />
         </View>
       </View>
+      <TouchableOpacity
+        style={styles.editButton}
+        onPress={() => checkAuth('CampanhaCreateEdit', { campanhaId: campanha.id })}
+      >
+        <Text><Ionicons name="pencil" size={16} color="black" /> Editar</Text>
+      </TouchableOpacity>
+
     </View >
   );
 
@@ -184,12 +192,12 @@ export default function HomePage() {
                 onPress={() => handleCategoryFilter(category)}
                 style={[styles.categoryButton, { backgroundColor: category.cor || COLORS.primary }, categoriesSelected?.id === category.id && { borderWidth: 3, borderColor: COLORS.white }]}
               >
-                <Text style={styles.categoryButtonText} numberOfLines={3}>{category.nome.length > 20 ? `${category.nome.slice(0, 20)}...` : category.nome}</Text>
+                <Text style={styles.categoryButtonText} numberOfLines={3}>{category.nome?.length > 20 ? `${category.nome.slice(0, 20)}...` : category.nome}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
           <View>
-            <Text style={{ fontSize: FONT_SIZES.md, fontWeight: 'bold', color: COLORS.white }}>{userNome ? `Olá ${userNome}, confira as Campanhas em Destaque:` : 'Confira as Campanhas em Destaque:'}</Text>
+            <Text style={{ fontSize: FONT_SIZES.md, fontWeight: 'bold', color: COLORS.white }}>{userNome ? `Olá ${userNome}, confira suas Campanhas em Destaque:` : 'Confira suas Campanhas em Destaque:'}</Text>
           </View>
         </View>
         {campanhas.map(renderCampanha)}

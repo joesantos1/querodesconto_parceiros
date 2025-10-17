@@ -104,7 +104,7 @@ export default function Login() {
                     transition={1000}
                     cachePolicy="memory-disk"
                 />
-                <Text style={styles.title}>Login</Text>
+                <Text style={styles.title}>Login (Lojista)</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 10 }}>
                     <TouchableOpacity
                         style={{
@@ -192,16 +192,6 @@ export default function Login() {
                     <Ionicons name="person-add" size={20} color="white" />
                     <Text style={[styles.buttonText]}>
                         Fazer meu cadastro (Grátis)
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={[styles.button, styles.buttonSecondary]}
-                    onPress={handleBack}
-                    disabled={loading}
-                >
-                    <Text style={[styles.buttonText, styles.buttonTextSecondary]}>
-                        Voltar
                     </Text>
                 </TouchableOpacity>
             </View>

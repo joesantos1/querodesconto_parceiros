@@ -11,19 +11,19 @@ export const getAllCupons = async (): Promise<Cupom[]> => {
   }
 };
 
-export const getMyCupons = async (): Promise<Cupom[]> => {
+export const getCampanhaCupons = async (campanhaId: number): Promise<Cupom[]> => {
   try {
-    const response = await api.get('/cupons/meus-cupons');
+    const response = await api.get(`/cupons/lojista/campanha/${campanhaId}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching my cupons:', error);
+    console.error('Error fetching campanha cupons:', error);
     throw error;
   }
 };
 
 export const getCupomById = async (id: number) => {
   try {
-    const response = await api.get(`/cupons/${id}`);
+    const response = await api.get(`/cupons/lojista/edit/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching cupom by ID:', error);
@@ -47,6 +47,36 @@ export const getCuponsUsuario = async (): Promise<CupomUsuario[]> => {
     return response.data;
   } catch (error) {
     console.error('Error fetching cupons for user:', error);
+    throw error;
+  }
+};
+
+export const getUltimosCuponsValidados = async () => {
+  try {
+    const response = await api.get('/cupons/lojista/ultimos-validados');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching latest validated cupons:', error);
+    throw error;
+  }
+}
+
+export const validarCupom = async (codigo: string) => {
+  try {
+    const response = await api.get(`/cupons/lojista/verificar/cupom/${codigo}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error validating cupom:', error);
+    throw error;
+  }
+};
+
+export const updateStatusCupomUsuario = async (cupomCodigo: number, userEmail: number) => {
+  try {
+    const response = await api.patch(`/cupons/lojista/${cupomCodigo}/status`, { userEmail });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating cupom status for user:', error);
     throw error;
   }
 };

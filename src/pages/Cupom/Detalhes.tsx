@@ -4,7 +4,7 @@ import { getCupomById, setCupomParaUsuario } from '@/services/cupons';
 import { Cupom, CupomDetalhes } from '@/types';
 import { formatNumber, formatarDataTimeStampToPtBr, formatarDataRelativa, urlToLojasLogo } from '@/utils/utils';
 import { Image } from 'expo-image';
-import { COLORS, FONT_SIZES, normaSizes } from '@/constants';
+import { COLORS, FONT_SIZES, normaSizes, SPACING } from '@/constants';
 import { ButtonBack } from '@/components/ButtonBack';
 import { FontAwesome } from '@expo/vector-icons';
 import { useAuth } from '@/contexts/AuthContext';
@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '@/types';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const styles = createStyles();
 export default function CupomPage() {
@@ -20,12 +21,11 @@ export default function CupomPage() {
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const id = route.params?.cupomId;
     const [cupom, setCupom] = useState<CupomDetalhes | null>(null);
-    const [jaTenho, setJaTenho] = useState(false);
     const { isAuthenticated } = useAuth();
     const scrollViewRef = useRef<ScrollView>(null);
     const [refreshing, setRefreshing] = useState(false);
 
-     const handleRefresh = async () => {
+    const handleRefresh = async () => {
         setRefreshing(true);
         await fetchCupom();
         setRefreshing(false);
@@ -40,22 +40,7 @@ export default function CupomPage() {
     const fetchCupom = async () => {
         const cupomData = await getCupomById(id);
         setCupom(cupomData);
-        setJaTenho(cupomData.jaTenho);
         //console.log('Cupom data:', cupomData);
-    };
-
-    const handlePegaCupom = async () => {
-        if (cupom) {
-            try {
-                await setCupomParaUsuario(cupom.id);
-                setJaTenho(true);
-                alert('Cupom resgatado com sucesso! Veja seus cupons na aba MEUS CUPONS.');
-                navigation.navigate('TabNavigator', { screen: 'MeusCupons' });
-            } catch (error) {
-                console.error('Error resgatar cupom:', error);
-                alert('Erro ao resgatar cupom. Tente novamente mais tarde.');
-            }
-        }
     };
 
     const checkAuth = (page: keyof RootStackParamList, params?: any) => {
@@ -76,8 +61,17 @@ export default function CupomPage() {
     }
 
     return (
-        <View style={styles.container}>
-            <ButtonBack goTo="back" />
+        <SafeAreaView style={styles.container}>
+            <View style={styles.header}>
+                <ButtonBack goTo="back" type={2} />
+                <Text style={styles.headerTitle}>
+                    Detalhes do Cupom
+                </Text>
+                <TouchableOpacity
+                    onPress={() => checkAuth('CupomCreateEdit', { cupomId: id })}>
+                    <Text style={{ marginLeft: SPACING.md, color: COLORS.primary }}><Ionicons name="pencil" size={16} color={COLORS.primary} /> Editar</Text>
+                </TouchableOpacity>
+            </View>
             <ScrollView
                 style={{ flexGrow: 1, width: '100%', paddingTop: 40 }}
                 contentContainerStyle={{ alignItems: 'center', paddingBottom: 80 }}
@@ -88,7 +82,7 @@ export default function CupomPage() {
                 }
             >
                 <View style={styles.headerLojaInfo}>
-                    <View style={styles.header}>
+                    <View style={styles.headerLoja}>
                         {cupom.loja?.logo && (
                             <View style={styles.logoContainer}>
                                 <Image
@@ -103,7 +97,7 @@ export default function CupomPage() {
                             <Text style={styles.lojaNome}><Ionicons name="storefront" size={normaSizes(16)} color={COLORS.white} /> {cupom.loja?.nome}</Text>
                             <Text style={styles.lojaSubtitulos}><Ionicons name="call-outline" size={normaSizes(16)} color={COLORS.grayLight} /> {cupom.loja?.telefone1}</Text>
                             <Text style={styles.lojaSubtitulos}><Ionicons name="mail-outline" size={normaSizes(16)} color={COLORS.grayLight} /> {cupom.loja?.email}</Text>
-                            <Text style={styles.lojaSubtitulos}><Ionicons name="location-outline" size={normaSizes(16)} color={COLORS.grayLight} /> {cupom.loja?.endereco}</Text>
+                            <Text style={styles.lojaSubtitulos}><Ionicons name="location-outline" size={normaSizes(16)} color={COLORS.grayLight} /> {cupom.loja?.endereco}, {cupom.loja?.cidade?.cidade} - {cupom.loja?.cidade?.estado}</Text>
                         </View>
                     </View>
 
@@ -144,15 +138,6 @@ export default function CupomPage() {
                                 </View>
                             ))
                         }
-                    </View>
-                    <View style={{ marginTop: 20, width: '100%', alignItems: 'center' }}>
-                        {!jaTenho ? (
-                            <TouchableOpacity onPress={handlePegaCupom} style={styles.pegaCupomButton}>
-                                <Text style={styles.pegaCupomButtonText}><Ionicons name="pricetag-outline" size={normaSizes(24)} color={COLORS.white} /> Pegar 01 Cupom</Text>
-                            </TouchableOpacity>
-                        ) : (
-                            <Text style={styles.subtitle}>Você já possui este cupom!</Text>
-                        )}
                     </View>
                 </View>
                 {cupom.outrosCupons && cupom.outrosCupons.length > 0 && (
@@ -204,6 +189,6 @@ export default function CupomPage() {
                     )}
                 </View>
             </ScrollView>
-        </View>
+        </SafeAreaView>
     );
 }

@@ -5,6 +5,7 @@ interface FormatDateOptions {
 }
 
 export const formatarDataTimeStampToPtBr = (data: string | number | Date): string => {
+  if (!data) return '';
   const dataFormatada = new Date(data);
   const opcoes: FormatDateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
   const dataString: string = dataFormatada.toLocaleDateString('pt-BR', opcoes);
@@ -46,6 +47,12 @@ export const validarEmail = (email: string): boolean => {
 
 export const validarSenha = (senha: string): boolean => {
   return senha.length >= 6;
+};
+
+export const isValidCNPJ = (cnpj: string): boolean => {
+  // Remove caracteres não numéricos
+  const cleanCNPJ = cnpj.replace(/[^\d]/g, '');
+  return cleanCNPJ.length === 14;
 };
 
 export const formatarTelefone = (telefone: string): string => {

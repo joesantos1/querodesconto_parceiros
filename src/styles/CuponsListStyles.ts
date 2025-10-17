@@ -82,7 +82,7 @@ export const createCuponsListStyles = () => {
       marginBottom: SPACING.sm,
     },
     cupomValue: {
-      fontSize: normaSizes(FONT_SIZES.xxl),
+      fontSize: normaSizes(40),
       fontWeight: 'bold',
       color: COLORS.primary,
     },
@@ -112,9 +112,10 @@ export const createCuponsListStyles = () => {
       marginBottom: SPACING.xs,
     },
     quantityText: {
-      fontSize: normaSizes(FONT_SIZES.sm),
-      color: COLORS.grayDark,
+      fontSize: normaSizes(FONT_SIZES.lg),
+      color: 'blue',
       marginLeft: SPACING.xs,
+      fontWeight: '600',
     },
     quantityAvailable: {
       color: COLORS.success,
@@ -161,7 +162,7 @@ export const createCuponsListStyles = () => {
       alignItems: 'center',
     },
     statusText: {
-      fontSize: normaSizes(FONT_SIZES.sm),
+      fontSize: normaSizes(FONT_SIZES.lg),
       fontWeight: 'bold',
       color: COLORS.white,
     },

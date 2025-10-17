@@ -132,7 +132,7 @@ export default function RegisterScreen() {
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
             <Ionicons name="person-add" size={40} color={COLORS.primary} />
-            <Text style={styles.title}>Criar Conta</Text>
+            <Text style={styles.title}>Criar Conta (Lojista)</Text>
           </View>
           {/* Nome */}
           <Text style={styles.label}>Nome completo</Text>
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#8B4513',
+    color: COLORS.primary,
     marginTop: 8,
     marginBottom: 8,
   },

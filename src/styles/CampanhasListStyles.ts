@@ -84,7 +84,7 @@ export const createCampanhasListStyles = () => {
     campanhaTitle: {
       fontSize: normaSizes(FONT_SIZES.lg),
       fontWeight: 'bold',
-      color: COLORS.dark,
+      color: COLORS.primary,
       marginBottom: SPACING.xs,
       lineHeight: 24,
     },
@@ -146,7 +146,7 @@ export const createCampanhasListStyles = () => {
     },
     actionButtonText: {
       color: COLORS.white,
-      fontSize: normaSizes(FONT_SIZES.sm),
+      fontSize: normaSizes(FONT_SIZES.md),
       fontWeight: 'bold',
       marginLeft: SPACING.xs,
     },

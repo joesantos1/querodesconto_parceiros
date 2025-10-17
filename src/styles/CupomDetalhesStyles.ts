@@ -18,46 +18,41 @@ export const createStyles = () => {
     return StyleSheet.create({
         container: {
             flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
             backgroundColor: '#ebebebff',
-            paddingHorizontal: 20,
-            paddingTop: Platform.OS === 'ios' ? 60 : 40,
-            paddingBottom: 40
+            paddingHorizontal: 16,
         },
-        buttonBackContainer: {
-            position: 'absolute',
-            top: Platform.OS === 'ios' ? 60 : 40,
-            left: 0,
-            width: 100,
-            zIndex: 10,
-        },
-        backButton: {
+        header: {
             flexDirection: 'row',
             alignItems: 'center',
-            gap: 8,
-            backgroundColor: '#fff',
-            padding: 8,
-            borderRadius: 8,
-            marginLeft: 8,
-            borderWidth: 1,
-            borderColor: COLORS.primary,
+            paddingHorizontal: SPACING.md,
+            paddingVertical: SPACING.sm,
+            borderBottomWidth: 1,
+            borderBottomColor: COLORS.grayLight,
+            backgroundColor: COLORS.white,
+            elevation: 2,
+            shadowColor: COLORS.black,
+            shadowOffset: {
+                width: 0,
+                height: 1,
+            },
+            shadowOpacity: 0.1,
+            shadowRadius: 2,
         },
-        backText: {
-            fontSize: 14,
+        headerTitle: {
+            fontSize: normaSizes(FONT_SIZES.lg),
             fontWeight: 'bold',
-            color: COLORS.primary,
+            color: COLORS.dark,
+            marginLeft: SPACING.md,
         },
-
         subtitle: {
             fontSize: 18,
             color: COLORS.primary,
             textAlign: 'center',
             marginVertical: SPACING.sm
         },
-        header: {
+        headerLoja: {
             flexDirection: 'row',
-            justifyContent: 'center',
+            justifyContent: 'space-between',
             backgroundColor: COLORS.primary,
             width: '100%',
             alignItems: 'center',
@@ -85,14 +80,16 @@ export const createStyles = () => {
             width: 100,
             height: 100,
             borderRadius: 100,
-            borderWidth: 4,
-            borderColor: COLORS.white,
-            marginRight: SPACING.md,
+            marginRight: 5,
+            marginBottom: 5,
         },
         logoContainer: {
-            width: '30%',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
             borderRadius: 100,
-            overflow: 'hidden'
+            backgroundColor: 'white',
+            marginHorizontal: SPACING.md,
         },
         lojaCampanhaTitulo: {
             fontSize: normaSizes(18),

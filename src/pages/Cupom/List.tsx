@@ -13,17 +13,20 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, NavigationProp, useFocusEffect } from '@react-navigation/native';
 
-import { getMyCupons, deleteCupom } from '@/services/cupons';
-import { Cupom, CupomStatus } from '@/types';
+import { getCampanhaCupons, deleteCupom } from '@/services/cupons';
+import { Cupom, CupomStatus, RootStackParamList } from '@/types';
 import { COLORS, FONT_SIZES, SPACING } from '@/constants';
 import { Button } from '@/components/Button';
 import { ButtonBack } from '@/components/ButtonBack';
 import { createCuponsListStyles } from '@/styles/CuponsListStyles';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
 const styles = createCuponsListStyles();
 
 export default function CuponsList() {
+  const route = useRoute<RouteProp<RootStackParamList, 'CuponsList'>>();
+  const { campanhaId } = route.params || {};
   const navigation = useNavigation<NavigationProp<any>>();
   const [cupons, setCupons] = useState<Cupom[]>([]);
   const [filteredCupons, setFilteredCupons] = useState<Cupom[]>([]);
@@ -34,7 +37,8 @@ export default function CuponsList() {
   const fetchCupons = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await getMyCupons();
+      const data = await getCampanhaCupons(Number(campanhaId));
+      //console.log('Fetched cupons:', data);
       setCupons(data || []);
       setFilteredCupons(data || []);
     } catch (error) {
@@ -94,7 +98,7 @@ export default function CuponsList() {
     if (qtd <= usados) {
       return COLORS.danger; // Esgotado
     }
-    
+
     switch (status) {
       case CupomStatus.ATIVO:
         return COLORS.success;
@@ -131,14 +135,14 @@ export default function CuponsList() {
   const getQuantityColor = (qtd: number, usados: number) => {
     const restantes = qtd - usados;
     const percentual = (restantes / qtd) * 100;
-    
-    if (percentual <= 0) return COLORS.danger;
-    if (percentual <= 20) return COLORS.warning;
-    return COLORS.success;
+
+    if (percentual <= 0) return 'red';
+    if (percentual <= 20) return 'orange';
+    return 'blue';
   };
 
   const formatCupomValue = (valor: number, tipo: string) => {
-    if (tipo === 'percentual') {
+    if (tipo === '%') {
       return `${valor}%`;
     }
     return `R$ ${valor.toFixed(2).replace('.', ',')}`;
@@ -146,10 +150,10 @@ export default function CuponsList() {
 
   const filterCupons = useCallback((filter: typeof selectedFilter) => {
     let filtered = cupons;
-    
+
     switch (filter) {
       case 'ativos':
-        filtered = cupons.filter(cupom => 
+        filtered = cupons.filter(cupom =>
           cupom.status === CupomStatus.ATIVO && cupom.qtd > cupom.usados
         );
         break;
@@ -157,14 +161,14 @@ export default function CuponsList() {
         filtered = cupons.filter(cupom => cupom.status === CupomStatus.INATIVO);
         break;
       case 'esgotados':
-        filtered = cupons.filter(cupom => 
+        filtered = cupons.filter(cupom =>
           cupom.qtd <= cupom.usados || cupom.status === CupomStatus.ESGOTADO
         );
         break;
       default:
         filtered = cupons;
     }
-    
+
     setFilteredCupons(filtered);
     setSelectedFilter(filter);
   }, [cupons]);
@@ -192,7 +196,7 @@ export default function CuponsList() {
 
   const renderCupomItem = ({ item }: { item: Cupom }) => {
     const isExpired = new Date() > new Date(Date.now() + item.validade * 24 * 60 * 60 * 1000);
-    
+
     return (
       <View style={[styles.cupomCard, isExpired && styles.cupomCardExpired]}>
         <View style={styles.cupomHeader}>
@@ -202,10 +206,10 @@ export default function CuponsList() {
             </Text>
             <Text style={styles.cupomType}>{item.tipo}</Text>
           </View>
-          
+
           <View style={styles.statusContainer}>
             <View style={[
-              styles.statusBadge, 
+              styles.statusBadge,
               { backgroundColor: getStatusColor(item.status, item.qtd, item.usados) }
             ]}>
               <Text style={styles.statusText}>
@@ -216,13 +220,11 @@ export default function CuponsList() {
         </View>
 
         <View style={styles.cupomInfo}>
-          <Text style={styles.cupomCodigo}>{item.codigo}</Text>
-          
           <View style={styles.cupomQuantity}>
-            <Ionicons 
-              name="layers-outline" 
-              size={16} 
-              color={getQuantityColor(item.qtd, item.usados)} 
+            <Ionicons
+              name="layers-outline"
+              size={16}
+              color={getQuantityColor(item.qtd, item.usados)}
             />
             <Text style={[
               styles.quantityText,
@@ -279,7 +281,7 @@ export default function CuponsList() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <ButtonBack goTo="back" />
+        <ButtonBack goTo="CampanhasList" type={2} />
         <Text style={styles.headerTitle}>Meus Cupons</Text>
         <TouchableOpacity onPress={handleCreateCupom} style={styles.addButton}>
           <Ionicons name="add" size={24} color={COLORS.primary} />
@@ -309,8 +311,8 @@ export default function CuponsList() {
           <View style={styles.emptyContainer}>
             <Ionicons name="ticket-outline" size={64} color={COLORS.gray} />
             <Text style={styles.emptyTitle}>
-              {selectedFilter === 'todos' 
-                ? 'Nenhum cupom encontrado' 
+              {selectedFilter === 'todos'
+                ? 'Nenhum cupom encontrado'
                 : `Nenhum cupom ${selectedFilter}`
               }
             </Text>
