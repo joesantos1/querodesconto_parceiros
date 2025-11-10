@@ -117,12 +117,9 @@ export default function ColabTeam() {
       // Recarregar lista
       loadLojistas();
     } catch (error: any) {
-      console.error('Erro ao adicionar lojista:', error.response.data);
+      console.error('Erro ao adicionar lojista ====: ', error.response.data.error);
       
       let errorMessage = 'Não foi possível adicionar o lojista à equipe';
-      if (error?.response?.data?.message) {
-        errorMessage = error.response.data.message;
-      }
       
       Alert.alert('Erro', errorMessage.length > 0 ? errorMessage : 'Não foi possível adicionar o lojista à equipe');
     } finally {

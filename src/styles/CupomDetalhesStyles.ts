@@ -39,7 +39,7 @@ export const createStyles = () => {
             shadowRadius: 2,
         },
         headerTitle: {
-            fontSize: normaSizes(FONT_SIZES.lg),
+            fontSize: normaSizes(FONT_SIZES.md),
             fontWeight: 'bold',
             color: COLORS.dark,
             marginLeft: SPACING.md,

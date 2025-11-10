@@ -119,20 +119,30 @@ export default function HomePage() {
           {campanha.cupons?.map(cupom => (
             <TouchableOpacity
               onPress={() => checkAuth('CupomDetalhes', { cupomId: cupom.id })}
-              key={cupom.id} style={[styles.cupomContainer, campanha.cupons?.length === 1 ? { width: width - 40 } : {}]}
+              key={cupom.id} style={styles.cupomContainer}
             >
-              <Text style={[styles.cupomText, cupom.tipo === 'R$' ? { fontSize: normaSizes(35) } : { fontSize: normaSizes(55) }]}>{cupom.tipo === 'R$' ? formatNumber(cupom.valor) : cupom.valor}</Text>
-              <View style={[styles.cupomTipoBox, cupom.tipo === 'R$' ? { top: 2, left: 1 } : { top: 2, right: -1 }]}>
-                <Text style={styles.cupomTipoText}>{cupom.tipo}</Text>
-              </View>
-              <View style={styles.cupomRestamBox}>
-                <Text style={styles.cupomRestamText}>Restam: <Text style={{ fontWeight: 'bold' }}>{cupom.qtd - cupom.usados}</Text></Text>
-              </View>
-              <View style={[styles.cupomTituloBox, cupom.tipo === 'R$' ? { right: 10 } : { left: 10 }]}>
-                <Text style={styles.cupomTituloBoxText}>Cupom:</Text>
-              </View>
-              <View style={[styles.cupomOffBox]}>
-                <Text style={styles.cupomOffBoxText}>OFF</Text>
+              <Image
+                source={require('../../assets/images/card.png')}
+                accessibilityLabel={`cupom ${cupom.id}`}
+                contentFit="cover"
+                transition={500}
+                cachePolicy="memory-disk"
+                style={styles.cupomTicket}
+              />
+              <View style={styles.cupomInfo}>
+                <Text style={[styles.cupomText, cupom.tipo === 'R$' ? { fontSize: normaSizes(30) } : { fontSize: normaSizes(50) }]}>{cupom.tipo === 'R$' ? formatNumber(cupom.valor) : cupom.valor}</Text>
+                <View style={[styles.cupomTipoBox, cupom.tipo === 'R$' ? { left: 2 } : { right: 2 }]}>
+                  <Text style={styles.cupomTipoText}>{cupom.tipo}</Text>
+                </View>
+                <View style={styles.cupomRestamBox}>
+                  <Text style={styles.cupomRestamText}>Restam: <Text style={{ fontWeight: 'bold' }}>{cupom.qtd - cupom.usados}</Text></Text>
+                </View>
+                <View style={[styles.cupomTituloBox, cupom.tipo === 'R$' ? { right: 20 } : { left: 20 }]}>
+                  <Text style={styles.cupomTituloBoxText}>Cupom:</Text>
+                </View>
+                <View style={[styles.cupomOffBox]}>
+                  <Text style={styles.cupomOffBoxText}>OFF</Text>
+                </View>
               </View>
             </TouchableOpacity>
           ))}
@@ -184,7 +194,7 @@ export default function HomePage() {
               onPress={() => { setCategoriesSelected(null); setCampanhas(campanhasRef.current); }}
               style={[styles.categoryButton, { backgroundColor: 'white' }]}
             >
-              <Text style={[styles.categoryButtonText, { color: COLORS.primary }]}><Ionicons name="globe-outline" size={16} color={COLORS.primary} /> Todas Categorias</Text>
+              <Text style={[styles.categoryButtonText, { color: COLORS.primary }]}><Ionicons name="globe-outline" size={normaSizes(16)} color={COLORS.primary} /> Todas Categorias</Text>
             </TouchableOpacity>
             {categories.map(category => (
               <TouchableOpacity
@@ -192,7 +202,7 @@ export default function HomePage() {
                 onPress={() => handleCategoryFilter(category)}
                 style={[styles.categoryButton, { backgroundColor: category.cor || COLORS.primary }, categoriesSelected?.id === category.id && { borderWidth: 3, borderColor: COLORS.white }]}
               >
-                <Text style={styles.categoryButtonText} numberOfLines={3}>{category.nome?.length > 20 ? `${category.nome.slice(0, 20)}...` : category.nome}</Text>
+                <Text style={styles.categoryButtonText} numberOfLines={3}>{category.nome}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>

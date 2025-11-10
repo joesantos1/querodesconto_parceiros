@@ -19,7 +19,7 @@ import { CampanhaCompleta, CampanhaStatus } from '@/types';
 import { COLORS, FONT_SIZES, SPACING } from '@/constants';
 import { Button } from '@/components/Button';
 import { ButtonBack } from '@/components/ButtonBack';
-import { urlToLojasLogo } from '@/utils/utils';
+import { urlToLojasLogo, formatarDataTimeStampToPtBr2 } from '@/utils/utils';
 import { createCampanhasListStyles } from '@/styles/CampanhasListStyles';
 
 const { width } = Dimensions.get('window');
@@ -136,10 +136,10 @@ export default function CampanhasList() {
 
         <View style={styles.dateContainer}>
           <Text style={styles.dateText}>
-            Início: {new Date(item.data_inicio).toLocaleDateString('pt-BR')}
+            Início: {formatarDataTimeStampToPtBr2(item.data_inicio)}
           </Text>
           <Text style={styles.dateText}>
-            Fim: {new Date(item.data_fim).toLocaleDateString('pt-BR')}
+            Fim: {formatarDataTimeStampToPtBr2(item.data_fim)}
           </Text>
         </View>
 

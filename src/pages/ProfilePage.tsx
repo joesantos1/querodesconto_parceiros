@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Alert, Platform, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
-import { updateUser, updateFotoUser } from '@services/users';
+import { updateLojista, updateFotoUser } from '@services/users';
 import { Ionicons } from '@expo/vector-icons';
 //import { urlToFotos } from '@/utils/utils';
 import { useAuth } from '@/contexts/AuthContext';
@@ -335,7 +335,7 @@ export default function EditarDados() {
                   style: 'destructive',
                   onPress: async () => {
                     try {
-                      await updateUser({ status: 'excluir' });
+                      await updateLojista({ status: 'excluir' });
                       Alert.alert('Conta Excluída', 'Sua conta foi excluída com sucesso.');
                       signOut();
                     } catch (error) {

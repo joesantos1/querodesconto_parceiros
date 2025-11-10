@@ -3,33 +3,26 @@ import {
   ScrollView, View, Text, TextInput, TouchableOpacity, ActivityIndicator, Alert, Platform
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { getUserById, updateUser } from '@/services/users';
+import { getLojistaById, updateLojista } from '@/services/users';
 import { Ionicons } from '@expo/vector-icons';
 import { maskPhone, validateCPF, formatarDataTimestamp } from '@/utils/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { COLORS } from '@/constants';
 import { RootStackParamList } from '@/types';
+import { Shopkeeper } from '@/types/lojista';
 import { ButtonBack } from '@/components/ButtonBack';
-
-const initialState = {
-  nome: '',
-  cpf: '',
-  telefone: '',
-  email: '',
-  endereco: '',
-  cidade: '',
-  estado: '',
-  foto: '',
-  data_nascimento: ''
-};
 
 export default function EditarDados() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [form, setForm] = useState(initialState);
+  const [form, setForm] = useState<Shopkeeper>({
+    nome: '',
+    email: '',
+    telefone: ''
+  });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const { signOut, isAuthenticated, loading: authLoading } = useAuth();
+  const { isAuthenticated, loading: authLoading } = useAuth();
 
 
   useEffect(() => {
@@ -48,7 +41,7 @@ export default function EditarDados() {
         return;
       }
       setLoading(true);
-      const data = await getUserById();
+      const data = await getLojistaById();
       setForm(data);
 
     } catch (e) {
@@ -64,40 +57,40 @@ export default function EditarDados() {
 
   const handleChange = (field: string, value: string) => {
     if (field === 'telefone') value = maskPhone(value);
-    if (field === 'estado') value = value.toUpperCase().slice(0, 2);
-    if (field === 'apelido') {
-      // Permite apenas letras minúsculas e números, sem espaços ou caracteres especiais
-      value = value.replace(/[^a-z0-9]/g, '');
-    }
     setForm({ ...form, [field]: value });
   };
 
   const validate = () => {
-    if (form.cpf && !validateCPF(form.cpf)) return 'CPF inválido';
-    if (form.endereco && form.endereco.length > 100) return 'Endereço muito longo';
-    if (form.cidade && form.cidade.length > 40) return 'Cidade muito longa';
-    return null;
+    if (!form.nome || form.nome.trim().length < 3) {
+      return 'O nome deve ter pelo menos 3 caracteres.';
+    }
+    if (!form.telefone || form.telefone.trim().length < 10) {
+      return 'O telefone deve ter pelo menos 10 caracteres.';
+    }
   };
 
   const handleSave = async () => {
+    setSaving(true);
+
+    //Validação de nome e telefone
     const error = validate();
     if (error) {
       Alert.alert('Erro', error);
       return;
     }
-    setSaving(true);
+
     try {
 
       // Para dados do usuário, enviar como JSON
+      //formata telefone para remover caracteres especiais
+
+      const telefoneFormatado = form.telefone.replace(/\D/g, '');
       const userData = {
-        telefone: form.telefone,
-        endereco: form.endereco,
-        cidade: form.cidade,
-        estado: form.estado,
-        data_nascimento: form.data_nascimento
+        telefone: telefoneFormatado,
+        nome: form.nome
       };
 
-      await updateUser(userData);
+      await updateLojista(userData);
       Alert.alert('Sucesso', 'Dados atualizados!');
 
       //refresh na pagina
@@ -148,17 +141,8 @@ export default function EditarDados() {
         <TextInput
           style={styles.input}
           value={form.nome}
-          editable={false}
+          onChangeText={v => handleChange('nome', v)}
           placeholder="Nome"
-        />
-        <Text style={{ fontWeight: 'bold', color: '#8B4513', marginBottom: 2 }}>CPF</Text>
-        <TextInput
-          style={styles.input}
-          value={form.cpf}
-          editable={!form.cpf}
-          placeholder="CPF"
-          keyboardType="numeric"
-          maxLength={14}
         />
         <Text style={{ fontWeight: 'bold', color: '#8B4513', marginBottom: 2 }}><Ionicons name="logo-whatsapp" size={14} color="black" /> Telefone (Whatsapp)</Text>
         <TextInput
@@ -177,40 +161,6 @@ export default function EditarDados() {
           placeholder="E-mail"
           keyboardType="email-address"
         />
-        <Text style={{ fontWeight: 'bold', color: '#8B4513', marginBottom: 2 }}>Endereço</Text>
-        <TextInput
-          style={styles.input}
-          value={form.endereco}
-          onChangeText={v => handleChange('endereco', v)}
-          placeholder="Endereço"
-          maxLength={100}
-        />
-        <Text style={{ fontWeight: 'bold', color: '#8B4513', marginBottom: 2 }}>Cidade</Text>
-        <TextInput
-          style={styles.input}
-          value={form.cidade}
-          onChangeText={v => handleChange('cidade', v)}
-          placeholder="Cidade"
-          maxLength={40}
-        />
-        <Text style={{ fontWeight: 'bold', color: '#8B4513', marginBottom: 2 }}>Estado</Text>
-        <TextInput
-          style={styles.input}
-          value={form.estado}
-          onChangeText={v => handleChange('estado', v)}
-          placeholder="Estado"
-          maxLength={2}
-          autoCapitalize="characters"
-        />
-        <Text style={{ fontWeight: 'bold', color: '#8B4513', marginBottom: 2 }}>Data de Nascimento</Text>
-        <TextInput
-          style={styles.input}
-          value={formatarDataTimestamp(form.data_nascimento)}
-          onChangeText={v => handleChange('data_nascimento', v)}
-          placeholder="Data de Nascimento"
-          maxLength={10}
-        />
-
         <TouchableOpacity
           style={{
             backgroundColor: saving ? '#FFA94D' : COLORS.primary,

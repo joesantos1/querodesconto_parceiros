@@ -97,9 +97,9 @@ export default function Login() {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
             <View style={styles.container}>
                 <ExpoImage
-                    source={'@/assets/images/qd_logo.png'}
-                    style={{ width: 150, height: 150, alignSelf: 'center', marginBottom: 20, resizeMode: 'contain' }}
-                    accessibilityLabel="Logo do GCamp"
+                    source={require('../../assets/images/qd_logo.png')}
+                    style={{ width: 100, height: 100, alignSelf: 'center', marginBottom: 40, borderRadius: 10, resizeMode: 'contain' }}
+                    accessibilityLabel="Logo do Kipom"
                     contentFit="contain"
                     transition={1000}
                     cachePolicy="memory-disk"

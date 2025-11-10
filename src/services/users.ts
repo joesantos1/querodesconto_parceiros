@@ -15,9 +15,9 @@ export const createUser = async (userData: any) => {
   }
 
 };
-export const getUserById = async () => {
+export const getLojistaById = async () => {
   try {
-    const r = await api.get(`/usuarios`);  
+    const r = await api.get(`/lojistas`);  
     return r.data;
   } catch (error) {
     console.log('Erro ao buscar usuário:', error);
@@ -27,7 +27,7 @@ export const getUserById = async () => {
 };
 export const getPerfilUser = async (id: number) => api.get(`/usuarios/perfil/${id}`).then(r => r.data);
 export const getPerfilUserLogging = async (id: number) => api.get(`/usuarios/perfil_logado/${id}`).then(r => r.data);
-export const updateUser = async (userData: any) => {
+export const updateLojista = async (userData: any) => {
   try {
     // Para dados JSON, manter o Content-Type
     const config = {
