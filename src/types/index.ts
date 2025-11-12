@@ -9,7 +9,7 @@ export type RootStackParamList = {
   UserDados: undefined;
   UserTrocaSenha: undefined;
   UserFaq: undefined;
-  CampanhasList: undefined;
+  CampanhasList: { lojaId?: number } | undefined;
   CampanhaCreateEdit: { campanhaId?: number } | undefined;
   CuponsList: { campanhaId?: number } | undefined;
   CupomCreateEdit: { cupomId?: number; campanhaId?: number } | undefined;
@@ -120,6 +120,14 @@ export interface Loja {
   cnpj: string;
   cidade: Cidade;
   localizacao_link?: string;
+}
+
+export interface LojaList extends Loja {
+  categorias: Categorias[];
+  isAdmin?: boolean;
+  totalActiveCampaigns?: number;
+  totalValidCoupons?: number;
+  totalUsedCoupons?: number;
 }
 
 export interface Categorias {

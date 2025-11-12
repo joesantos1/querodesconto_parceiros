@@ -196,7 +196,7 @@ export default function ValidaCupom() {
                         <Text style={[styles.lastCuponStats, { fontSize: 20 }]}><Ionicons name="person" size={20} color={"black"} /> {item.usuario.nome}</Text>
                         <Text style={styles.lastCuponStats}>{item.tipo === '%' ? item.valor + '%' : 'R$ ' + item.valor.toFixed(2)}</Text>
                         <Text style={styles.lastCuponStats}><Ionicons name="storefront" size={20} color={"black"} /> {item.loja.nome}</Text>
-                        <Text style={styles.lastCuponStats}>{formatarDataTimeStampToPtBr2(item.updated_at)}</Text>
+                        <Text style={styles.lastCuponStats}>☑️{formatarDataTimeStampToPtBr2(item.updated_at)}</Text>
                     </View>
                 )}
             />

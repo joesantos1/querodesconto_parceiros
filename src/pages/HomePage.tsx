@@ -122,7 +122,7 @@ export default function HomePage() {
               key={cupom.id} style={styles.cupomContainer}
             >
               <Image
-                source={require('../../assets/images/card.png')}
+                source={require('../../assets/images/card3.png')}
                 accessibilityLabel={`cupom ${cupom.id}`}
                 contentFit="cover"
                 transition={500}

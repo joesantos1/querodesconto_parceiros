@@ -27,6 +27,15 @@ export const getCampanhaById = async (id: number) => {
   }
 };
 
+export const getCampanhaByLojaId = async (lojaId: number) => {
+  try {
+    const response = await api.get(`/campanhas/store/${lojaId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const createCampanha = async (campanhaData: any) => {
   try {
     const response = await api.post('/campanhas', campanhaData);

@@ -11,10 +11,10 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation, NavigationProp, useFocusEffect } from '@react-navigation/native';
+import { useNavigation, NavigationProp, useRoute, RouteProp, useFocusEffect } from '@react-navigation/native';
 import { Image } from 'expo-image';
 
-import { getMyCampanhas, deleteCampanha } from '@/services/campanhas';
+import { getMyCampanhas, deleteCampanha, getCampanhaByLojaId } from '@/services/campanhas';
 import { CampanhaCompleta, CampanhaStatus } from '@/types';
 import { COLORS, FONT_SIZES, SPACING } from '@/constants';
 import { Button } from '@/components/Button';
@@ -24,9 +24,17 @@ import { createCampanhasListStyles } from '@/styles/CampanhasListStyles';
 
 const { width } = Dimensions.get('window');
 const styles = createCampanhasListStyles();
+type RouteParams = {
+  CampanhaList: {
+    lojaId?: number;
+  };
+};
 
+type CreateEditRouteProp = RouteProp<RouteParams, 'CampanhaList'>;
 export default function CampanhasList() {
+  const route = useRoute<CreateEditRouteProp>();
   const navigation = useNavigation<NavigationProp<any>>();
+  const { lojaId } = route.params || {};
   const [campanhas, setCampanhas] = useState<CampanhaCompleta[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -34,15 +42,22 @@ export default function CampanhasList() {
   const fetchCampanhas = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await getMyCampanhas();
-      setCampanhas(data.campaigns || []);
+      
+      if (lojaId) {
+        const data = await getCampanhaByLojaId(lojaId);
+        setCampanhas(data || []);
+        return;
+      } else {
+        const data = await getMyCampanhas();
+        setCampanhas(data.campaigns || []);
+      }
     } catch (error) {
       console.error('Erro ao buscar campanhas:', error);
       Alert.alert('Erro', 'Não foi possível carregar as campanhas');
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [lojaId]);
 
   useFocusEffect(
     useCallback(() => {

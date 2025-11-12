@@ -15,7 +15,7 @@ import { ButtonBack } from '../../components/ButtonBack';
 import { createLojasListStyles } from '../../styles/LojasListStyles';
 import { getMyStores, deleteStore } from '../../services/stores';
 import { getCities } from '../../services/city';
-import { Loja, Cidade, RootStackParamList } from '../../types';
+import { Loja, Cidade, RootStackParamList, LojaList } from '../../types';
 import { COLORS } from '../../constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -25,7 +25,7 @@ export default function LojasList() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const styles = createLojasListStyles();
 
-  const [lojas, setLojas] = useState<Loja[]>([]);
+  const [lojas, setLojas] = useState<LojaList[]>([]);
   const [cidades, setCidades] = useState<Cidade[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -142,7 +142,7 @@ export default function LojasList() {
     }
   };
 
-  const renderLojaCard = ({ item: loja }: { item: Loja }) => (
+  const renderLojaCard = ({ item: loja }: { item: LojaList }) => (
     <View style={styles.lojaCard}>
       <View style={styles.lojaHeader}>
         {loja.logo ? (
@@ -244,16 +244,16 @@ export default function LojasList() {
       {/* Estatísticas */}
       <View style={styles.statsContainer}>
         <View style={styles.statItem}>
-          <Text style={styles.statNumber}>0</Text>
+          <Text style={styles.statNumber}>{loja.totalActiveCampaigns || 0}</Text>
           <Text style={styles.statLabel}>Campanhas{'\n'}Ativas</Text>
         </View>
         <View style={styles.statItem}>
-          <Text style={styles.statNumber}>0</Text>
+          <Text style={styles.statNumber}>{loja.totalValidCoupons || 0}</Text>
           <Text style={styles.statLabel}>Cupons{'\n'}Válidos</Text>
         </View>
         <View style={styles.statItem}>
-          <Text style={styles.statNumber}>0</Text>
-          <Text style={styles.statLabel}>Total{'\n'}Vendas</Text>
+          <Text style={styles.statNumber}>{loja.totalUsedCoupons || 0}</Text>
+          <Text style={styles.statLabel}>Total{'\n'}Cupons Usados</Text>
         </View>
       </View>
 
@@ -261,35 +261,42 @@ export default function LojasList() {
       <View style={styles.actionsContainer}>
         <TouchableOpacity
           style={[styles.actionButton, styles.editButton]}
-          onPress={() => navigation.navigate('CampanhasList')}
+          onPress={() => navigation.navigate('CampanhasList', { lojaId: loja.id })}
         >
           <Ionicons name="megaphone" size={16} color={COLORS.white} />
           <Text style={styles.actionButtonText}>Campanhas</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.actionButton, styles.editButton]}
-          onPress={() => navigation.navigate('ColabTeam', { 
-            lojaId: loja.id, 
-            lojaNome: loja.nome 
-          })}
-        >
-          <Ionicons name="people" size={16} color={COLORS.white} />
-          <Text style={styles.actionButtonText}>Equipe</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.actionButton, styles.editButton]}
-          onPress={() => handleEditLoja(loja)}
-        >
-          <Ionicons name="pencil" size={16} color={COLORS.white} />
-          <Text style={styles.actionButtonText}>Editar</Text>
-        </TouchableOpacity>
+        {loja.isAdmin && (
+          <>
+            <TouchableOpacity
+              style={[styles.actionButton, styles.editButton]}
+              onPress={() => navigation.navigate('ColabTeam', {
+                lojaId: loja.id,
+                lojaNome: loja.nome
+              })}
+            >
+              <Ionicons name="people" size={16} color={COLORS.white} />
+              <Text style={styles.actionButtonText}>Equipe</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.actionButton, styles.editButton]}
+              onPress={() => handleEditLoja(loja)}
+            >
+              <Ionicons name="pencil" size={16} color={COLORS.white} />
+              <Text style={styles.actionButtonText}>Editar</Text>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
-      <TouchableOpacity
-        style={styles.deleteButton}
-        onPress={() => handleDeleteLoja(loja)}
-      >
-        <Ionicons name="trash" size={16} color={COLORS.white} />
-      </TouchableOpacity>
+      {loja.isAdmin && (
+        <TouchableOpacity
+          style={styles.deleteButton}
+          onPress={() => handleDeleteLoja(loja)}
+        >
+          <Ionicons name="trash" size={16} color={COLORS.white} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 
