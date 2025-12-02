@@ -27,10 +27,10 @@ export default function Login() {
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
     // Redireciona se já estiver logado
-    /*
+/*
     useEffect(() => {
         if (auth.isAuthenticated) {
-            navigation.navigate('TabNavigator');
+            navigation.navigate('TabNavigator', { screen: 'Home' });
         }
     }, [auth.isAuthenticated]);
 */
@@ -63,9 +63,20 @@ export default function Login() {
                 const normalizedTelefone = telefone.replace(/\D/g, ''); // Remove caracteres não numéricos
                 await auth.signIn('', normalizedTelefone, senha);
             }
+            
+            // Login bem-sucedido - aguarda um pouco para garantir que o estado foi atualizado
+            /*
+            setTimeout(() => {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'TabNavigator', params: { screen: 'Home' } }],
+                });
+            }, 100);
+            */
+            
         } catch (error: any) {
             setSenha(''); // Limpa a senha
-            Alert.alert('Erro', error.response.data?.message || 'Falha no login. Verifique suas login e senha.');
+            Alert.alert('Erro', error.response?.data?.message || 'Falha no login. Verifique suas credenciais.');
         } finally {
             setLoading(false);
         }
@@ -97,7 +108,7 @@ export default function Login() {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
             <View style={styles.container}>
                 <ExpoImage
-                    source={require('../../assets/images/qd_logo.png')}
+                    source={require('../../assets/icon.png')}
                     style={{ width: 100, height: 100, alignSelf: 'center', marginBottom: 40, borderRadius: 10, resizeMode: 'contain' }}
                     accessibilityLabel="Logo do Kipom"
                     contentFit="contain"

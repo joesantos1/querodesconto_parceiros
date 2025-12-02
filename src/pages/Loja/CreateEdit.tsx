@@ -42,7 +42,7 @@ export default function LojaCreateEdit() {
     endereco: '',
     cidade_id: 0,
     telefone1: '',
-    telefone2: '',
+    telefone2: 0,
     email: '',
     site: '',
     status: 1,
@@ -108,7 +108,7 @@ export default function LojaCreateEdit() {
         endereco: loja.endereco || '',
         cidade_id: loja.cidade_id || 0,
         telefone1: loja.telefone1 || '',
-        telefone2: loja.telefone2 || '',
+        telefone2: loja.telefone2 || 0,
         email: loja.email || '',
         site: loja.site || '',
         status: loja.status || 1,
@@ -174,7 +174,7 @@ export default function LojaCreateEdit() {
       //formata cnpj, telefone1 e telefone2 removendo caracteres especiais - deixa apenas os numeros
       const cnpj = formData.cnpj.replace(/\D/g, '');
       const telefone1 = formData.telefone1.replace(/\D/g, '');
-      const telefone2 = formData.telefone2.replace(/\D/g, '');
+      const telefone2 = formData.telefone2.toString().replace(/\D/g, '');
       const dataToSave = {
         ...formData,
         cnpj,
@@ -607,7 +607,7 @@ export default function LojaCreateEdit() {
               <TextInput
                 ref={telefone2Ref}
                 style={styles.input}
-                value={formData.telefone2}
+                value={formData.telefone2?.toString() || ''}
                 onChangeText={(text) => handleChange('telefone2', text)}
                 placeholder="(11) 3333-3333"
                 keyboardType="phone-pad"

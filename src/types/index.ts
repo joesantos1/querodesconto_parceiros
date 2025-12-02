@@ -111,7 +111,7 @@ export interface Loja {
   endereco: string;
   cidade_id: number;
   telefone1: string;
-  telefone2: string;
+  telefone2?: number;
   email: string;
   site: string;
   status: number;
@@ -143,7 +143,7 @@ export interface LojaFormData {
   endereco: string;
   cidade_id: number;
   telefone1: string;
-  telefone2: string;
+  telefone2: number;
   email: string;
   site: string;
   status: number;

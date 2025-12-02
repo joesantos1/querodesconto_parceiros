@@ -42,6 +42,7 @@ export default function AppNavigator() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="NewPass" component={NewPass} />
+        <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Navigator>
     );
   }
@@ -49,8 +50,8 @@ export default function AppNavigator() {
   // Stack para usuários autenticados (aplicação)
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="TabNavigator">
-      <Stack.Screen name="CupomDetalhes" component={CupomDetalhes} />
       <Stack.Screen name="TabNavigator" component={TabNavigator} />
+      <Stack.Screen name="CupomDetalhes" component={CupomDetalhes} />
       <Stack.Screen name="UserDados" component={UserDados} />
       <Stack.Screen name="UserTrocaSenha" component={UserTrocaSenha} />
       <Stack.Screen name="UserFaq" component={UserFaq} />

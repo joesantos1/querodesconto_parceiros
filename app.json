@@ -2,7 +2,7 @@
   "expo": {
     "name": "kipom_lojistas",
     "slug": "kipomlojistas",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -39,7 +39,8 @@
           "maps",
           "googlemaps"
         ]
-      }
+      },
+      "bundleIdentifier": "com.blackag.kipomlojistas"
     },
     "android": {
       "adaptiveIcon": {

@@ -210,7 +210,20 @@ export default function HomePage() {
             <Text style={{ fontSize: FONT_SIZES.md, fontWeight: 'bold', color: COLORS.white }}>{userNome ? `Olá ${userNome}, confira suas Campanhas em Destaque:` : 'Confira suas Campanhas em Destaque:'}</Text>
           </View>
         </View>
-        {campanhas.map(renderCampanha)}
+        {campanhas.length === 0 ? (
+          <View style={{ marginTop: 50, alignItems: 'center' }}>
+            <Ionicons name="alert-circle-outline" size={50} color={COLORS.gray} />
+            <Text style={{ fontSize: FONT_SIZES.md, color: COLORS.gray, marginTop: 10 }}>Nenhuma campanha encontrada. Crie uma Loja e em seguida uma nova campanha para começar.</Text>
+            <TouchableOpacity
+              style={[styles.categoryButton, { backgroundColor: COLORS.primary, marginTop: 20 }]}
+              onPress={() => navigation.navigate('LojasList')}
+            >
+              <Text style={[styles.categoryButtonText, { color: 'white', fontWeight: 'bold', textAlign: 'center' }]}>+ Criar uma Loja</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+        campanhas.map(renderCampanha)
+        )}
 
       </ScrollView>
     </SafeAreaView>

@@ -239,7 +239,7 @@ export default function RegisterScreen() {
             style={styles.loginLink}
             onPress={() => navigation.navigate('Login')}
           >
-            <Text style={styles.loginLinkText}>Já tem conta? <Text style={{ color: COLORS.primary }}>Entrar</Text></Text>
+            <Text style={styles.loginLinkText}>Já tem conta? <Text style={{ color: COLORS.primary, fontWeight: 'bold' }}>Entrar</Text></Text>
           </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>

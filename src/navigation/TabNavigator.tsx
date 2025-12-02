@@ -24,6 +24,8 @@ export default function TabNavigator() {
   const { isAuthenticated, loading } = useAuth();
   return (
     <Tab.Navigator
+      initialRouteName="Home"
+      backBehavior="initialRoute"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName: IconName;
@@ -54,18 +56,18 @@ export default function TabNavigator() {
         tabBarInactiveTintColor: COLORS.gray,
         tabBarStyle: styles.tabBar,
         tabBarLabelStyle: styles.tabBarLabel,
-        headerShown: false,
+        headerShown: false
       })}
     >
-      <Tab.Screen
-        name="Home"
-        component={HomePage}
-        options={{
-          tabBarLabel: 'Campanhas',
-        }}
-      />
-      {isAuthenticated ? (
+      {isAuthenticated && !loading ? (
         <>
+          <Tab.Screen
+            name="Home"
+            component={HomePage}
+            options={{
+              tabBarLabel: 'Campanhas',
+            }}
+          />
           <Tab.Screen
             name="ValidaCupom"
             component={ValidaCupom}
@@ -83,14 +85,17 @@ export default function TabNavigator() {
           />
         </>
       ) : (
-        <Tab.Screen
-          name="Login"
-          component={Login}
-          options={{
-            tabBarLabel: 'Login',
-          }}
-        />
+        <>
+          <Tab.Screen
+            name="Login"
+            component={Login}
+            options={{
+              tabBarLabel: 'Login',
+            }}
+          />
+        </>
       )}
+
     </Tab.Navigator>
   );
 }
